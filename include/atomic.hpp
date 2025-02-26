@@ -10,6 +10,11 @@
 #include <xf86drmMode.h>
 
 // TODO: ponder whether this should be a sub-namespace like BDRM::Atomic
+
+// TODO: Colorspace connector property and hdr output metadata
+
+// TODO: understanding explicit sync or whatever these fences do
+
 namespace BDRM {
 
     /// Connector request properties
@@ -18,6 +23,7 @@ namespace BDRM {
         friend class AtomicRequest;
 
         public:
+            // methods for configuring the connector
             void setCrtc(const Crtc& crtc);
 
         private:
@@ -34,6 +40,7 @@ namespace BDRM {
         friend class AtomicRequest;
 
         public:
+            // methods for configurting the crtc
             void setActive(bool active);
             void setMode(const drmModeModeInfo* mode);
             void setVrr(bool vrr);
@@ -57,6 +64,7 @@ namespace BDRM {
         friend class AtomicRequest;
 
         public:
+            // methods for configuring the plane
             void setFb(uint32_t fb_id, uint32_t x, uint32_t y, uint32_t w, uint32_t h);
             /*void setFb(uint32_t fb_id) { // FIXME: class for framebuffer
                 throw std::runtime_error("Not implemented!");

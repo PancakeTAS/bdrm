@@ -17,9 +17,8 @@ namespace BDRM {
         friend class PlaneReq;
 
         public:
-            std::optional<size_t> gamma_lut_size;
+            std::optional<size_t> gamma_lut_size; //!< amount of rows in the gamma lut
             std::optional<size_t> degamma_lut_size;
-            
             bool ctm; //!< color transformation matrix
             bool explicit_sync;
 

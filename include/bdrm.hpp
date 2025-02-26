@@ -40,16 +40,17 @@ namespace BDRM {
         public:
             Bdrm(std::string_view path);
 
-            uint64_t get_cursor_width() { return this->cursor_width; }
-            uint64_t get_cursor_height() { return this->cursor_height; }
+            uint64_t get_cursor_width() { return this->cursor_width; } // <! preferred width of the cursor plane
+            uint64_t get_cursor_height() { return this->cursor_height; } // <! preferred height
 
             // TODO: methods for filtering
+
             const std::vector<Connector>& get_connectors() { return this->connectors; }
             const std::vector<Crtc>& get_crtcs() { return this->crtcs; }
             const std::vector<Plane>& get_planes() { return this->planes; }
 
-            AtomicRequest create_atomic_request();
-            void commit(AtomicRequest& request);
+            AtomicRequest create_atomic_request(); // <! create a new empty atomic request
+            void commit(AtomicRequest& request); // <! commit an atomic request
         
     };
 

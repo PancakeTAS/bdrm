@@ -1,4 +1,5 @@
 #include "atomic.hpp"
+#include <drm_mode.h>
 #include <stdexcept>
 #include <xf86drmMode.h>
 
@@ -15,6 +16,7 @@ using namespace BDRM;
 
 void ConnectorReq::setCrtc(const Crtc& crtc) {
     ADD_PROPERTY(this->connector.conn_id, this->connector.props, "CRTC_ID", crtc.crtc_id)
+    ADD_PROPERTY(this->connector.conn_id, this->connector.props, "link-status", DRM_MODE_LINK_STATUS_GOOD)
 }
         
 void CrtcReq::setActive(bool active) {
