@@ -25,6 +25,7 @@ namespace BDRM {
         public:
             // methods for configuring the connector
             void setCrtc(const Crtc& crtc);
+            void clearProperties(); //!< set all properties to default
 
         private:
             const Connector& connector;
@@ -47,6 +48,7 @@ namespace BDRM {
             void setGammaLut(const std::vector<drm_color_lut>& lut);
             void setCTM(const struct drm_color_ctm* ctm);
             void setDegammaLut(const std::vector<drm_color_lut>& lut);
+            void clearProperties(); //!< set all properties to default
 
         private:
             const Crtc& crtc;
@@ -73,6 +75,7 @@ namespace BDRM {
             void setCrtc(const Crtc& crtc, const drmModeModeInfo* mode) {
                 this->setCrtc(crtc, 0, 0, mode->hdisplay, mode->vdisplay);
             }
+            void clearProperties(); //!< set all properties to default
 
         private:
             const Plane& plane;

@@ -81,6 +81,27 @@ Bdrm::Bdrm(std::string_view path) : node(path) {
     }
 
     drmModeFreePlaneResources(plane_res);
+
+    // build reset atomic request
+
+    AtomicRequest request = this->create_atomic_request();
+    
+    for (Crtc& crtc : this->crtcs) {
+        CrtcReq req = request.addCrtc(crtc);
+        req.clearProperties();
+    }
+
+    for (Connector& conn : this->connectors) {
+        ConnectorReq req = request.addConnector(conn);
+        req.clearProperties();
+    }
+
+    for (Plane& plane : this->planes) {
+        PlaneReq req = request.addPlane(plane);
+        req.clearProperties();
+    }
+
+    this->commit(request);
 }
 
 AtomicRequest Bdrm::create_atomic_request() {

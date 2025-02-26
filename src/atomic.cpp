@@ -79,6 +79,35 @@ void PlaneReq::setFb(uint32_t fb_id, uint32_t x, uint32_t y, uint32_t w, uint32_
     ADD_PROPERTY(this->plane.plane_id, this->plane.props, "SRC_H", h << 16)
 }
 
+// default properties
+
+void ConnectorReq::clearProperties() {
+    ADD_PROPERTY(this->connector.conn_id, this->connector.props, "CRTC_ID", 0)
+    ADD_PROPERTY(this->connector.conn_id, this->connector.props, "link-status", DRM_MODE_LINK_STATUS_GOOD)
+}
+
+void CrtcReq::clearProperties() {
+    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "ACTIVE", 0)
+    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "MODE_ID", 0)
+    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "VRR_ENABLED", 0)
+    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "GAMMA_LUT", 0)
+    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "CTM", 0)
+    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "DEGAMMA_LUT", 0)
+}
+
+void PlaneReq::clearProperties() {
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "CRTC_ID", 0)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "FB_ID", 0)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "SRC_X", 0)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "SRC_Y", 0)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "SRC_W", 0)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "SRC_H", 0)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "CRTC_X", 0)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "CRTC_Y", 0)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "CRTC_W", 0)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "CRTC_H", 0)
+}
+
 // main request
 
 AtomicRequest::AtomicRequest(const int fd) : fd(fd) {
@@ -104,8 +133,8 @@ PlaneReq& AtomicRequest::addPlane(const Plane& plane) {
 
 AtomicRequest::~AtomicRequest() {
     drmModeAtomicFree(this->req);
-    for (const auto& crtc : this->crtcs) {
-        for (const uint32_t blob_id : crtc.blobs)
+    for (const CrtcReq& reqs : this->crtcs) {
+        for (const uint32_t blob_id : reqs.blobs)
             drmModeDestroyPropertyBlob(this->fd, blob_id);
     }
 }
