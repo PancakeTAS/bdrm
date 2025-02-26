@@ -11,6 +11,7 @@ using namespace BDRM;
 
 Plane::Plane(int fd, drmModePlane* plane) {
     this->plane_id = plane->plane_id;
+    this->possible_crtcs = plane->possible_crtcs;
 
     drmModeObjectProperties* props = drmModeObjectGetProperties(fd, plane->plane_id, DRM_MODE_OBJECT_PLANE);
     for (uint32_t i = 0; i < props->count_props; ++i) {

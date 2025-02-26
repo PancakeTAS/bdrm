@@ -44,11 +44,12 @@ namespace BDRM {
             uint64_t get_cursor_width() { return this->cursor_width; } // <! preferred width of the cursor plane
             uint64_t get_cursor_height() { return this->cursor_height; } // <! preferred height
 
-            const std::vector<CRef<Crtc>> suitable_crtcs(CRef<Connector> connector);
-
             const std::vector<CRef<Connector>> get_all_connectors();
             const std::vector<CRef<Crtc>> get_all_crtcs();
             const std::vector<CRef<Plane>> get_all_planes();
+
+            const std::vector<CRef<Crtc>> suitable_crtcs(const Connector& connector);
+            const std::vector<CRef<Plane>> suitable_planes(const Crtc& crtc, PlaneType type);
 
             AtomicRequest create_atomic_request(); // <! create a new empty atomic request
             void commit(AtomicRequest& request); // <! commit an atomic request

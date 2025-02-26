@@ -1,6 +1,7 @@
 #ifndef PLANE_HPP
 #define PLANE_HPP
 
+#include <bitset>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -41,6 +42,7 @@ namespace BDRM {
 
         private:
             uint32_t plane_id;
+            std::bitset<32> possible_crtcs;
             std::unordered_map<std::string, uint32_t> props;
 
             Plane(int fd, drmModePlane* plane);

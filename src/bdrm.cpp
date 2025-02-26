@@ -6,11 +6,15 @@
 #include "resources/plane.hpp"
 #include "utils.hpp"
 
+#include <bitset>
+#include <cstddef>
 #include <cstring>
 #include <fcntl.h>
+#include <optional>
 #include <stdexcept>
 #include <errno.h>
 #include <unistd.h>
+#include <vector>
 #include <xf86drm.h>
 #include <drm.h>
 #include <xf86drmMode.h>
@@ -112,26 +116,6 @@ Bdrm::Bdrm(std::string_view path) : node(path) {
     this->commit(request);
 }
 
-/*const std::vector<CRef<Crtc>> Bdrm::suitable_crtcs(CRef<Connector> connector) {
-    auto supported_crtcs = std::vector<CRef<Crtc>>();
-    auto all_crtcs = this->get_all_crtcs();
-
-    for (uint32_t encoder_id : connector.get().encoder_ids) {
-        drmModeEncoder* encoder = drmModeGetEncoder(this->node.get_fd(), encoder_id);
-        if (encoder == nullptr) continue;
-
-        std::bitset<32> possible_crtcs(encoder->possible_crtcs);
-        for (size_t i = 0; i < all_crtcs.size(); i++) {
-            if (!possible_crtcs[i])
-                continue;
-
-            supported_crtcs.push_back(all_crtcs[i]);
-        }
-    }
-
-    return supported_crtcs;
-}*/
-
 // filters
 
 const std::vector<CRef<Connector>> Bdrm::get_all_connectors() {
@@ -153,6 +137,65 @@ const std::vector<CRef<Plane>> Bdrm::get_all_planes() {
     for (UP<Plane>& plane : this->planes)
         planes.push_back(*plane);
     return planes;
+}
+
+const std::vector<CRef<Crtc>> Bdrm::suitable_crtcs(const Connector& connector) {
+    auto supported_crtcs = std::vector<CRef<Crtc>>();
+    auto all_crtcs = this->get_all_crtcs();
+
+    // get all encoders the connector can use
+    for (uint32_t encoder_id : connector.encoder_ids) {
+        drmModeEncoder* encoder = drmModeGetEncoder(this->node.get_fd(), encoder_id);
+        if (encoder == nullptr) continue;
+
+        // check the encoders bitmask for supported crtcs
+        std::bitset<32> possible_crtcs(encoder->possible_crtcs);
+        for (size_t i = 0; i < all_crtcs.size(); i++) {
+            if (!possible_crtcs[i])
+                continue;
+
+            // add the supported crtc to the list
+            supported_crtcs.push_back(all_crtcs[i]);
+        }
+    }
+
+    return supported_crtcs;
+}
+
+const std::vector<CRef<Plane>> Bdrm::suitable_planes(const Crtc& crtc, PlaneType type) {
+    // find crtc index
+    auto all_crtcs = this->get_all_crtcs();
+    std::optional<size_t> index = -1;
+    for (size_t i = 0; i < all_crtcs.size(); i++) {
+        if (all_crtcs[i].get().crtc_id != crtc.crtc_id)
+            continue;
+
+        index = i;
+        break;
+    }
+
+    if (!index.has_value())
+        throw std::invalid_argument("Invalid CRTC argument");
+
+    
+    auto supported_planes = std::vector<CRef<Plane>>();
+    auto all_planes = this->get_all_planes();
+
+    // go through all planes
+    for (CRef<Plane> c_plane : all_planes) {
+        const Plane& plane = c_plane.get();
+        if (plane.type != type)
+            continue;
+
+        // check the planes bitmask at the crtc index
+        std::bitset<32> possible_crtcs(plane.possible_crtcs);
+        if (!possible_crtcs[*index])
+            continue;
+
+        supported_planes.push_back(plane);
+    }
+
+    return supported_planes;
 }
 
 // atomic requests

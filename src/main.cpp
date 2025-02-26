@@ -4,6 +4,7 @@
 #include "resources/crtc.hpp"
 #include "resources/plane.hpp"
 #include "utils.hpp"
+#include <algorithm>
 #include <fcntl.h>
 #include <iostream>
 #include <unistd.h>
@@ -63,23 +64,43 @@ int main() {
 
     // create an atomic request
 
-    BDRM::AtomicRequest request = bdrm.create_atomic_request();
+    {
 
-    const BDRM::Connector& connector = bdrm.get_all_connectors()[0];
-    const BDRM::Crtc& crtc = bdrm.get_all_crtcs()[0];
-    const BDRM::Plane& plane = bdrm.get_all_planes()[0];
-    
-    BDRM::ConnectorReq& conn_req = request.addConnector(connector);
-    conn_req.setCrtc(crtc);
+        // get the integrated display
+        auto connectors = bdrm.get_all_connectors();
+        auto connector = std::find_if(connectors.begin(), connectors.end(), [](auto c) {
+            return c.get().name == "eDP-1";
+        })->get();
 
-    BDRM::CrtcReq& crtc_req = request.addCrtc(crtc);
-    crtc_req.setActive(true);
-    crtc_req.setMode(&connector.modes.front());
-    
-    BDRM::PlaneReq& plane_req = request.addPlane(plane);
-    plane_req.setCrtc(crtc, &connector.modes.front());
+        auto mode = std::find_if(connector.modes.begin(), connector.modes.end(), [](auto m) {
+            return m.hdisplay == 1920 && m.vdisplay == 1080 && m.vrefresh == 60;
+        })[0];
 
-    bdrm.commit(request);
+        // find a suitable crtc and plane
+        auto crtc = bdrm.suitable_crtcs(connector).front().get();
+        auto plane = bdrm.suitable_planes(crtc, BDRM::PlaneType::PRIMARY).front().get();
+
+        // build request
+        BDRM::AtomicRequest request = bdrm.create_atomic_request();
+
+        BDRM::ConnectorReq& conn_req = request.addConnector(connector);
+        conn_req.setCrtc(crtc);
+
+        BDRM::CrtcReq& crtc_req = request.addCrtc(crtc);
+        crtc_req.setActive(true);
+        crtc_req.setMode(&mode);
+
+        BDRM::PlaneReq& plane_req = request.addPlane(plane);
+        plane_req.setCrtc(crtc, &mode);
+
+        // sleep 1s
+        sleep(1);
+        bdrm.commit(request);
+
+    }
+
+    // sleep 5 seconds
+    sleep(5);
 
     return 0;
 }
