@@ -1,8 +1,10 @@
 #ifndef CONNECTOR_HPP
 #define CONNECTOR_HPP
 
+#include <cstdint>
 #include <optional>
 #include <string>
+#include <unordered_map>
 #include <vector>
 #include <xf86drmMode.h>
 
@@ -16,6 +18,7 @@ namespace BDRM {
     class Connector {
 
         friend class Bdrm;
+        friend class ConnectorReq;
 
         public:
             std::string name; //!< e.g. "HDMI-A-1"
@@ -34,6 +37,7 @@ namespace BDRM {
 
         private:
             uint32_t conn_id;
+            std::unordered_map<std::string, uint32_t> props;
 
             Connector(int fd, drmModeConnector* conn);
 

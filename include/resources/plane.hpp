@@ -1,6 +1,8 @@
 #ifndef PLANE_HPP
 #define PLANE_HPP
 
+#include <string>
+#include <unordered_map>
 #include <vector>
 #include <xf86drmMode.h>
 
@@ -31,6 +33,7 @@ namespace BDRM {
     class Plane {
 
         friend class Bdrm;
+        friend class PlaneReq;
 
         public:
             PlaneType type = PRIMARY;
@@ -38,6 +41,7 @@ namespace BDRM {
 
         private:
             uint32_t plane_id;
+            std::unordered_map<std::string, uint32_t> props;
 
             Plane(int fd, drmModePlane* plane);
 

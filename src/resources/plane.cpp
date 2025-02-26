@@ -13,10 +13,12 @@ Plane::Plane(int fd, drmModePlane* plane) {
     this->plane_id = plane->plane_id;
 
     drmModeObjectProperties* props = drmModeObjectGetProperties(fd, plane->plane_id, DRM_MODE_OBJECT_PLANE);
-    for (int i = 0; i < props->count_props; ++i) {
+    for (uint32_t i = 0; i < props->count_props; ++i) {
         drmModePropertyRes* prop = drmModeGetProperty(fd, props->props[i]);
         if (prop == nullptr) continue;
     
+        this->props[prop->name] = prop->prop_id;
+
         if (strcmp(prop->name, "type") == 0) {
             this->type = static_cast<PlaneType>(props->prop_values[i]);
         } else if (strcmp(prop->name, "IN_FORMATS") == 0) {

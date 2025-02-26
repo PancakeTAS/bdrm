@@ -1,4 +1,6 @@
 #include "bdrm.hpp"
+#include "atomic.hpp"
+#include "drm_mode.h"
 
 #include <cstring>
 #include <fcntl.h>
@@ -7,6 +9,7 @@
 #include <unistd.h>
 #include <xf86drm.h>
 #include <drm.h>
+#include <xf86drmMode.h>
 
 using namespace BDRM;
 
@@ -69,7 +72,7 @@ Bdrm::Bdrm(std::string_view path) : node(path) {
     if (plane_res == nullptr)
         throw std::runtime_error("Failed to get drm plane resources");
 
-    for (int i = 0; i < plane_res->count_planes; i++) {
+    for (uint32_t i = 0; i < plane_res->count_planes; i++) {
         drmModePlane* plane = drmModeGetPlane(fd, plane_res->planes[i]);
         if (plane == nullptr) continue;
 
@@ -78,4 +81,13 @@ Bdrm::Bdrm(std::string_view path) : node(path) {
     }
 
     drmModeFreePlaneResources(plane_res);
+}
+
+AtomicRequest Bdrm::create_atomic_request() {
+    return AtomicRequest(this->node.get_fd());
+}
+
+void Bdrm::commit(AtomicRequest& request) {
+    if (drmModeAtomicCommit(this->node.get_fd(), request.req, DRM_MODE_ATOMIC_ALLOW_MODESET, nullptr) < 0)
+        throw std::runtime_error("Failed to commit atomic request");
 }

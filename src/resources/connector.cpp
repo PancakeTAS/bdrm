@@ -31,6 +31,8 @@ Connector::Connector(int fd, drmModeConnector* conn) {
     for (int i = 0; i < conn->count_props; ++i) {
         drmModePropertyRes* prop = drmModeGetProperty(fd, conn->props[i]);
         if (prop == nullptr) continue;
+
+        this->props[prop->name] = prop->prop_id;
     
         if (strcmp(prop->name, "non-desktop") == 0) {
             this->non_desktop = conn->prop_values[i];

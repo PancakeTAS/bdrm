@@ -1,6 +1,7 @@
 #ifndef BDRM_HPP
 #define BDRM_HPP
 
+#include "atomic.hpp"
 #include "resources/connector.hpp"
 #include "resources/crtc.hpp"
 #include "resources/plane.hpp"
@@ -20,7 +21,7 @@ namespace BDRM {
         DeviceNode(std::string_view path);
         ~DeviceNode();
 
-        const int get_fd() const { return this->fd; }
+        int get_fd() { return this->fd; }
 
     };
 
@@ -39,13 +40,16 @@ namespace BDRM {
         public:
             Bdrm(std::string_view path);
 
-            const uint64_t get_cursor_width() const { return this->cursor_width; }
-            const uint64_t get_cursor_height() const { return this->cursor_height; }
+            uint64_t get_cursor_width() { return this->cursor_width; }
+            uint64_t get_cursor_height() { return this->cursor_height; }
 
             // TODO: methods for filtering
-            const std::vector<Connector>& get_connectors() const { return this->connectors; }
-            const std::vector<Crtc>& get_crtcs() const { return this->crtcs; }
-            const std::vector<Plane>& get_planes() const { return this->planes; }
+            const std::vector<Connector>& get_connectors() { return this->connectors; }
+            const std::vector<Crtc>& get_crtcs() { return this->crtcs; }
+            const std::vector<Plane>& get_planes() { return this->planes; }
+
+            AtomicRequest create_atomic_request();
+            void commit(AtomicRequest& request);
         
     };
 
