@@ -22,7 +22,7 @@ Plane::Plane(int fd, drmModePlane* plane) {
         if (strcmp(prop->name, "type") == 0) {
             this->type = static_cast<PlaneType>(props->prop_values[i]);
         } else if (strcmp(prop->name, "IN_FORMATS") == 0) {
-            drmModePropertyBlobRes* blob = drmModeGetPropertyBlob(fd, props->prop_values[i]);
+            drmModePropertyBlobRes* blob = drmModeGetPropertyBlob(fd, static_cast<uint32_t>(props->prop_values[i]));
             if (blob == nullptr) {
                 drmModeFreeProperty(prop);
                 continue;

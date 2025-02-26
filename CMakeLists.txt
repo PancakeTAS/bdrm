@@ -14,7 +14,16 @@ file(GLOB SOURCES
 )
 
 include_directories(include)
-include_directories(/usr/include/libdrm) # workaround
+include_directories(SYSTEM /usr/include/libdrm) # workaround
 
 add_executable(bdrm ${SOURCES})
 target_link_libraries(bdrm drm display-info)
+
+target_compile_options(bdrm PRIVATE
+    -Wall -Wextra -pedantic -Weverything
+    -Wno-shadow
+    -Wno-padded
+    -Wno-c++98-compat
+    -Wno-unsafe-buffer-usage
+    -Wno-pre-c++20-compat-pedantic
+)

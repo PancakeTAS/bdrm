@@ -18,9 +18,9 @@ Connector::Connector(int fd, drmModeConnector* conn) {
         type_name ? type_name : "Unknown",
         conn->connector_type_id);
 
-    this->modes = std::vector<drmModeModeInfo>(conn->count_modes);
+    this->modes = std::vector<drmModeModeInfo>(static_cast<size_t>(conn->count_modes));
     if (conn->count_modes > 0)
-        std::memcpy(this->modes.data(), conn->modes, conn->count_modes * sizeof(drmModeModeInfo));
+        std::memcpy(this->modes.data(), conn->modes, static_cast<size_t>(conn->count_modes) * sizeof(drmModeModeInfo));
 
     this->connected = conn->connection == DRM_MODE_CONNECTED;
     this->subpixelLayout = conn->subpixel;
@@ -39,7 +39,7 @@ Connector::Connector(int fd, drmModeConnector* conn) {
         } else if (strcmp(prop->name, "vrr_capable") == 0) {
             this->vrr_capable = conn->prop_values[i];
         } else if (strcmp(prop->name, "EDID") == 0) {
-            drmModePropertyBlobRes* blob = drmModeGetPropertyBlob(fd, conn->prop_values[i]);
+            drmModePropertyBlobRes* blob = drmModeGetPropertyBlob(fd, static_cast<uint32_t>(conn->prop_values[i]));
             if (blob == nullptr) {
                 drmModeFreeProperty(prop);
                 continue;

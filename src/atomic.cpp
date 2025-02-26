@@ -14,11 +14,11 @@ using namespace BDRM;
         throw std::runtime_error("Failed to add " prop_name " property to atomic request"); }
 
 void ConnectorReq::setCrtc(const Crtc& crtc) {
-    ADD_PROPERTY(this->connector.conn_id, this->connector.props, "CRTC_ID", crtc.crtc_id);
+    ADD_PROPERTY(this->connector.conn_id, this->connector.props, "CRTC_ID", crtc.crtc_id)
 }
         
 void CrtcReq::setActive(bool active) {
-    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "ACTIVE", active);
+    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "ACTIVE", active)
 }
 
 void CrtcReq::setMode(const drmModeModeInfo* mode) {
@@ -26,12 +26,12 @@ void CrtcReq::setMode(const drmModeModeInfo* mode) {
     if (drmModeCreatePropertyBlob(this->fd, mode, sizeof(drmModeModeInfo), &blob_id) < 0)
         throw std::runtime_error("Failed to create mode blob");
     
-    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "MODE_ID", blob_id);
+    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "MODE_ID", blob_id)
     this->blobs.push_back(blob_id);
 }
 
 void CrtcReq::setVrr(bool vrr) {
-    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "VRR_ENABLED", vrr);
+    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "VRR_ENABLED", vrr)
 }
 
 void CrtcReq::setGammaLut(const std::vector<drm_color_lut>& lut) {
@@ -39,7 +39,7 @@ void CrtcReq::setGammaLut(const std::vector<drm_color_lut>& lut) {
     if (drmModeCreatePropertyBlob(this->fd, lut.data(), sizeof(drm_color_lut) * lut.size(), &blob_id) < 0)
         throw std::runtime_error("Failed to create gamma lut blob");
     
-    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "GAMMA_LUT", blob_id);
+    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "GAMMA_LUT", blob_id)
     this->blobs.push_back(blob_id);
 }
 
@@ -48,7 +48,7 @@ void CrtcReq::setCTM(const struct drm_color_ctm* ctm) {
     if (drmModeCreatePropertyBlob(this->fd, ctm, sizeof(drm_color_ctm), &blob_id) < 0)
         throw std::runtime_error("Failed to create ctm blob");
     
-    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "CTM", blob_id);
+    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "CTM", blob_id)
     this->blobs.push_back(blob_id);
 }
 
@@ -57,24 +57,24 @@ void CrtcReq::setDegammaLut(const std::vector<drm_color_lut>& lut) {
     if (drmModeCreatePropertyBlob(this->fd, lut.data(), sizeof(drm_color_lut) * lut.size(), &blob_id) < 0)
         throw std::runtime_error("Failed to create degamma lut blob");
     
-    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "DEGAMMA_LUT", blob_id);
+    ADD_PROPERTY(this->crtc.crtc_id, this->crtc.props, "DEGAMMA_LUT", blob_id)
     this->blobs.push_back(blob_id);
 }
 
 void PlaneReq::setCrtc(const Crtc& crtc, uint32_t x, uint32_t y, uint32_t w, uint32_t h) {
-    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "CRTC_ID", crtc.crtc_id);
-    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "CRTC_X", x);
-    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "CRTC_Y", y);
-    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "CRTC_W", w);
-    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "CRTC_H", h);
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "CRTC_ID", crtc.crtc_id)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "CRTC_X", x)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "CRTC_Y", y)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "CRTC_W", w)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "CRTC_H", h)
 }
 
 void PlaneReq::setFb(uint32_t fb_id, uint32_t x, uint32_t y, uint32_t w, uint32_t h) {
-    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "FB_ID", fb_id);
-    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "SRC_X", x << 16);
-    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "SRC_Y", y << 16);
-    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "SRC_W", w << 16);
-    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "SRC_H", h << 16);
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "FB_ID", fb_id)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "SRC_X", x << 16)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "SRC_Y", y << 16)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "SRC_W", w << 16)
+    ADD_PROPERTY(this->plane.plane_id, this->plane.props, "SRC_H", h << 16)
 }
 
 // main request
