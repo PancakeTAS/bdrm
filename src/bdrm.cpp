@@ -76,4 +76,6 @@ Bdrm::Bdrm(std::string_view path) : node(path) {
         this->planes.emplace_back(Plane(fd, plane));
         drmModeFreePlane(plane);
     }
+
+    drmModeFreePlaneResources(plane_res);
 }
