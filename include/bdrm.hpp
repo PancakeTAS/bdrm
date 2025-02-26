@@ -2,6 +2,7 @@
 #define BDRM_HPP
 
 #include "atomic.hpp"
+#include "utils.hpp"
 #include "resources/connector.hpp"
 #include "resources/crtc.hpp"
 #include "resources/plane.hpp"
@@ -33,9 +34,9 @@ namespace BDRM {
 
             uint64_t cursor_width, cursor_height;
 
-            std::vector<Connector> connectors;
-            std::vector<Crtc> crtcs;
-            std::vector<Plane> planes;
+            std::vector<UP<Connector>> connectors;
+            std::vector<UP<Crtc>> crtcs;
+            std::vector<UP<Plane>> planes;
 
         public:
             Bdrm(std::string_view path);
@@ -43,11 +44,11 @@ namespace BDRM {
             uint64_t get_cursor_width() { return this->cursor_width; } // <! preferred width of the cursor plane
             uint64_t get_cursor_height() { return this->cursor_height; } // <! preferred height
 
-            // TODO: methods for filtering
+            const std::vector<CRef<Crtc>> suitable_crtcs(CRef<Connector> connector);
 
-            const std::vector<Connector>& get_connectors() { return this->connectors; }
-            const std::vector<Crtc>& get_crtcs() { return this->crtcs; }
-            const std::vector<Plane>& get_planes() { return this->planes; }
+            const std::vector<CRef<Connector>> get_all_connectors();
+            const std::vector<CRef<Crtc>> get_all_crtcs();
+            const std::vector<CRef<Plane>> get_all_planes();
 
             AtomicRequest create_atomic_request(); // <! create a new empty atomic request
             void commit(AtomicRequest& request); // <! commit an atomic request

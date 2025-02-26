@@ -22,6 +22,10 @@ Connector::Connector(int fd, drmModeConnector* conn) {
     if (conn->count_modes > 0)
         std::memcpy(this->modes.data(), conn->modes, static_cast<size_t>(conn->count_modes) * sizeof(drmModeModeInfo));
 
+    this->encoder_ids = std::vector<uint32_t>(static_cast<size_t>(conn->count_encoders));
+    if (conn->count_encoders > 0)
+        std::memcpy(this->encoder_ids.data(), conn->encoders, static_cast<size_t>(conn->count_encoders) * sizeof(uint32_t));
+
     this->connected = conn->connection == DRM_MODE_CONNECTED;
     this->subpixelLayout = conn->subpixel;
     this->conn_id = conn->connector_id;

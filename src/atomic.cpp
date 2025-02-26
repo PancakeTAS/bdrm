@@ -1,4 +1,7 @@
 #include "atomic.hpp"
+#include "resources/connector.hpp"
+#include "resources/crtc.hpp"
+#include "resources/plane.hpp"
 #include <drm_mode.h>
 #include <stdexcept>
 #include <xf86drmMode.h>

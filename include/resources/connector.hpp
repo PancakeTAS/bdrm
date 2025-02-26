@@ -37,6 +37,7 @@ namespace BDRM {
 
         private:
             uint32_t conn_id;
+            std::vector<uint32_t> encoder_ids; //!< supported encoders
             std::unordered_map<std::string, uint32_t> props;
 
             Connector(int fd, drmModeConnector* conn);
