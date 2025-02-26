@@ -30,16 +30,16 @@ namespace BDRM {
     /// Nonvolatile drm plane instance
     class Plane {
 
+        friend class Bdrm;
+
         public:
             PlaneType type = PRIMARY;
             std::vector<PlaneFormat> supported_formats;
 
-            Plane(int fd, drmModePlane* plane); // FIXME: temporary
-
         private:
             uint32_t plane_id;
 
-            //Plane(int fd, drmModePlane* plane);
+            Plane(int fd, drmModePlane* plane);
 
     };
 

@@ -51,7 +51,7 @@ Bdrm::Bdrm(std::string_view path) : node(path) {
         drmModeConnector* conn = drmModeGetConnector(fd, res->connectors[i]);
         if (conn == nullptr) continue;
 
-        this->connectors.emplace_back(fd, conn);
+        this->connectors.emplace_back(Connector(fd, conn));
         drmModeFreeConnector(conn);
     }
 
@@ -59,7 +59,7 @@ Bdrm::Bdrm(std::string_view path) : node(path) {
         drmModeCrtc* crtc = drmModeGetCrtc(fd, res->crtcs[i]);
         if (crtc == nullptr) continue;
 
-        this->crtcs.emplace_back(fd, crtc);
+        this->crtcs.emplace_back(Crtc(fd, crtc));
         drmModeFreeCrtc(crtc);
     }
 
@@ -73,7 +73,7 @@ Bdrm::Bdrm(std::string_view path) : node(path) {
         drmModePlane* plane = drmModeGetPlane(fd, plane_res->planes[i]);
         if (plane == nullptr) continue;
 
-        this->planes.emplace_back(fd, plane);
+        this->planes.emplace_back(Plane(fd, plane));
         drmModeFreePlane(plane);
     }
 }

@@ -1,4 +1,4 @@
-#include "crtc.hpp"
+#include "resources/crtc.hpp"
 
 #include <cstring>
 #include <xf86drmMode.h>

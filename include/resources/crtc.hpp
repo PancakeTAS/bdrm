@@ -9,6 +9,8 @@ namespace BDRM {
     /// Nonvolatile drm ctrc instance
     class Crtc {
 
+        friend class Bdrm;
+
         public:
             std::optional<size_t> gamma_lut_size;
             std::optional<size_t> degamma_lut_size;
@@ -16,12 +18,10 @@ namespace BDRM {
             bool ctm; //!< color transformation matrix
             bool explicit_sync;
 
-            Crtc(int fd, drmModeCrtc* crtc); // FIXME: temporary
-
         private:
             uint32_t crtc_id;
 
-            //Crtc(int fd, drmModeCrtc* crtc);
+            Crtc(int fd, drmModeCrtc* crtc);
 
     };
 

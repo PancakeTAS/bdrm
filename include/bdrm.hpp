@@ -1,9 +1,9 @@
 #ifndef BDRM_HPP
 #define BDRM_HPP
 
-#include "connector.hpp"
-#include "crtc.hpp"
-#include "plane.hpp"
+#include "resources/connector.hpp"
+#include "resources/crtc.hpp"
+#include "resources/plane.hpp"
 #include <cstdint>
 #include <string_view>
 #include <vector>

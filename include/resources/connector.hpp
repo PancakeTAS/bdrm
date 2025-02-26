@@ -15,6 +15,8 @@ namespace BDRM {
     /// Nonvolatile drm connector instance
     class Connector {
 
+        friend class Bdrm;
+
         public:
             std::string name; //!< e.g. "HDMI-A-1"
             std::vector<drmModeModeInfo> modes;
@@ -30,12 +32,10 @@ namespace BDRM {
             std::optional<di_color_primaries> color_primaries;
             std::optional<di_hdr_static_metadata> hdr_metadata;
 
-            Connector(int fd, drmModeConnector* conn); // FIXME: temporary
-
         private:
             uint32_t conn_id;
 
-            //Connector(int fd, drmModeConnector* conn);
+            Connector(int fd, drmModeConnector* conn);
 
     };
 

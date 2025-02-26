@@ -8,7 +8,10 @@ project(bdrm
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB SOURCES
+    "src/*.cpp"
+    "src/resources/*.cpp"
+)
 
 include_directories(include)
 include_directories(/usr/include/libdrm) # workaround
