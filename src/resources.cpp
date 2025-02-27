@@ -112,6 +112,7 @@ const std::vector<CRef<Crtc>> Resources::search_crtcs(CrtcQueryArgs args) const 
 }
 
 const std::vector<CRef<Plane>> Resources::search_planes(PlaneQueryArgs args) const {
+    // find the CRTC index for later
     std::optional<uint32_t> crtc_idx = std::nullopt;
     if (args.crtc.has_value()) {
         for (size_t i = 0; i < this->crtcs.size(); i++) {
@@ -133,6 +134,7 @@ const std::vector<CRef<Plane>> Resources::search_planes(PlaneQueryArgs args) con
         if (args.type.has_value() && plane.type != args.type.value())
             continue;
         if (args.format.has_value()) {
+            // try to find the requested format
             auto fmt = std::ranges::find_if(plane.supported_formats, [&](const PlaneFormat& pf) {
                 return pf.format == args.format.value();
             });
@@ -140,6 +142,7 @@ const std::vector<CRef<Plane>> Resources::search_planes(PlaneQueryArgs args) con
             if (fmt == plane.supported_formats.end())
                 continue;
 
+            // .. and the modifier
             if (args.modifier && std::ranges::find(fmt->modifiers, args.modifier.value()) == fmt->modifiers.end())
                 continue;
         }

@@ -13,7 +13,6 @@ int main() {
     const BDRM::Resources& resources = bdrm.get_resources();
 
     // print connectors
-
     std::cerr << "Connectors:" << std::endl;
     for (BDRM::CRef<BDRM::Connector> c_conn : resources.search_connectors({})) {
         const BDRM::Connector& conn = c_conn;
@@ -33,7 +32,6 @@ int main() {
     }
 
     // print crtcs
-
     std::cerr << "Crtcs:" << std::endl;
     for (BDRM::CRef<BDRM::Crtc> c_crtc : resources.search_crtcs({})) {
         const BDRM::Crtc& crtc = c_crtc;
@@ -45,7 +43,6 @@ int main() {
     }
 
     // print planes
-
     std::cerr << "Planes:" << std::endl;
     for (BDRM::CRef<BDRM::Plane> c_plane : resources.search_planes({})) {
         const BDRM::Plane& plane = c_plane;
@@ -59,7 +56,6 @@ int main() {
     }
 
     // create an atomic request
-
     {
 
         // get the integrated display
@@ -82,7 +78,6 @@ int main() {
         plane_req.setCrtc(crtc, &mode);
 
         // sleep 1s
-        sleep(1);
         bdrm.commit(request);
 
     }

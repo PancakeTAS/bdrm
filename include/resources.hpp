@@ -15,8 +15,7 @@ namespace BDRM {
         friend class AtomicRequest;
 
         private:
-            Resources(int fd);
-
+            Resources(int fd); //!< fetch all resources
             int fd;
 
             std::vector<Connector> connectors;
@@ -34,16 +33,16 @@ namespace BDRM {
                 OP<std::string> make = std::nullopt; //!< monitor manufacturer/model/serial
                 OP<std::string> model = std::nullopt;
                 OP<std::string> serial = std::nullopt;
-            };
-            const std::vector<CRef<Connector>> search_connectors(ConnectorQueryArgs args) const;
+            }; //!< query arguments for searching connectors
+            const std::vector<CRef<Connector>> search_connectors(ConnectorQueryArgs args) const; //!< search for specific connectors
 
             struct ModeQueryArgs {
                 OP<uint32_t> width = std::nullopt;
                 OP<uint32_t> height = std::nullopt;
                 OP<uint32_t> min_refresh = std::nullopt; //!< min refresh rate (inclusive)
                 OP<uint32_t> max_refresh = std::nullopt; //!< max refresh rate (inclusive)
-            };
-            const std::vector<drmModeModeInfo> search_modes(ModeQueryArgs args) const;
+            }; //!< query arguments for searching modes
+            const std::vector<drmModeModeInfo> search_modes(ModeQueryArgs args) const; //!< search for specific modes
 
             struct CrtcQueryArgs {
                 OP<CRef<Connector>> connector = std::nullopt; //!< must support this connector
@@ -51,16 +50,19 @@ namespace BDRM {
                 OP<bool> degamma_lut = std::nullopt;
                 OP<bool> ctm = std::nullopt; //!< must support a color transformation matrix
                 OP<bool> explicit_sync = std::nullopt;
-            };
-            const std::vector<CRef<Crtc>> search_crtcs(CrtcQueryArgs args) const;
+            }; //!< query arguments for searching crtcs
+            const std::vector<CRef<Crtc>> search_crtcs(CrtcQueryArgs args) const; //!< search for specific crtcs
 
             struct PlaneQueryArgs {
                 OP<CRef<Crtc>> crtc = std::nullopt; //!< must support this crtc
                 OP<PlaneType> type = std::nullopt;
                 OP<uint32_t> format = std::nullopt;
                 OP<uint64_t> modifier = std::nullopt; //!< format must be set!
-            };
-            const std::vector<CRef<Plane>> search_planes(PlaneQueryArgs args) const;
+            }; //!< query arguments for searching planes
+            const std::vector<CRef<Plane>> search_planes(PlaneQueryArgs args) const; //!< search for specific planes
+
+            // TODO: function that takes a map of connectors, crtcs and planes and returns a valid configuration
+
     };
 
 }

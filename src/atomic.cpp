@@ -17,11 +17,11 @@ AtomicRequest::AtomicRequest(const int fd, const Resources& resources) : fd(fd) 
         throw std::runtime_error("Failed to allocate atomic request");
 
     for (const Connector& connector : resources.connectors)
-        this->addConnector(connector).clearProperties();
+        this->addConnector(connector).zeroedRequest();
     for (const Crtc& crtc : resources.crtcs)
-        this->addCrtc(crtc).clearProperties();
+        this->addCrtc(crtc).zeroedRequest();
     for (const Plane& plane : resources.planes)
-        this->addPlane(plane).clearProperties();
+        this->addPlane(plane).zeroedRequest();
 }
 
 ConnectorReq& AtomicRequest::addConnector(const Connector& connector) {

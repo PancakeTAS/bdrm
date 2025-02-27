@@ -27,7 +27,7 @@ void PlaneReq::setFb(uint32_t fb_id, uint32_t x, uint32_t y, uint32_t w, uint32_
     SET("SRC_H", h << 16)
 }
 
-void PlaneReq::clearProperties() {
+void PlaneReq::zeroedRequest() {
     SET("CRTC_ID", 0)
     SET("FB_ID", 0)
     SET("SRC_X", 0)

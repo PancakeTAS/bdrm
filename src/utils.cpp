@@ -24,6 +24,7 @@ bool BDRM::supports_crtc(int fd, uint32_t crtc_idx, std::vector<uint32_t> encode
         drmModeEncoder* encoder = drmModeGetEncoder(fd, encoder_id);
         if (encoder == nullptr) continue;
 
+        // check if bit at index is set in possible_crtcs
         std::bitset<32> possible_crtcs(encoder->possible_crtcs);
         if (possible_crtcs[crtc_idx]) {
             drmModeFreeEncoder(encoder);

@@ -16,7 +16,7 @@ void ConnectorReq::setCrtc(const Crtc& crtc) {
     SET("link-status", DRM_MODE_LINK_STATUS_GOOD)
 }
 
-void ConnectorReq::clearProperties() {
+void ConnectorReq::zeroedRequest() {
     SET("CRTC_ID", 0)
     SET("link-status", DRM_MODE_LINK_STATUS_GOOD)
 }

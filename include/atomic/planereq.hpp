@@ -27,12 +27,12 @@ namespace BDRM {
                 this->setCrtc(crtc, 0, 0, mode->hdisplay, mode->vdisplay);
             }
 
-            private:
+        private:
             const Plane& plane;
             drmModeAtomicReq* req;
 
             PlaneReq(const Plane& plane, drmModeAtomicReq* req) : plane(plane), req(req) {}
-            void clearProperties();
+            void zeroedRequest(); //!< set all properties to zero
 
     };
 

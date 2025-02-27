@@ -5,15 +5,19 @@
 using namespace BDRM;
 
 Crtc::Crtc(int fd, drmModeCrtc* crtc) {
+    // copy basic properties
     this->crtc_id = crtc->crtc_id;
 
+    // browse properties
     drmModeObjectProperties* props = drmModeObjectGetProperties(fd, crtc->crtc_id, DRM_MODE_OBJECT_CRTC);
     for (uint32_t i = 0; i < props->count_props; ++i) {
         drmModePropertyRes* prop = drmModeGetProperty(fd, props->props[i]);
         if (prop == nullptr) continue;
 
+        // store ids for later
         this->props[prop->name] = prop->prop_id;
 
+        // store values if needed
         if (strcmp(prop->name, "GAMMA_LUT_SIZE") == 0) {
             this->gamma_lut_size = props->prop_values[i];
         } else if (strcmp(prop->name, "DEGAMMA_LUT_SIZE") == 0) {

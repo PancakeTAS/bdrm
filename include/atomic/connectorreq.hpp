@@ -19,15 +19,14 @@ namespace BDRM {
         friend class AtomicRequest;
 
         public:
-            // methods for configuring the connector
-            void setCrtc(const Crtc& crtc);
+            void setCrtc(const Crtc& crtc); //!< set the CRTC and reset link status
 
-            private:
+        private:
             const Connector& connector;
             drmModeAtomicReq* req;
 
             ConnectorReq(const Connector& connector, drmModeAtomicReq* req) : connector(connector), req(req) {}
-            void clearProperties();
+            void zeroedRequest(); //!< set all properties to zero
 
     };
 

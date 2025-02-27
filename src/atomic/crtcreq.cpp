@@ -55,7 +55,7 @@ void CrtcReq::setDegammaLut(const std::vector<drm_color_lut>& lut) {
     this->blobs.push_back(blob_id);
 }
 
-void CrtcReq::clearProperties() {
+void CrtcReq::zeroedRequest() {
     SET("ACTIVE", 0)
     SET("MODE_ID", 0)
     SET("VRR_ENABLED", 0)

@@ -14,23 +14,19 @@ namespace BDRM {
     // FIXME: when not doing atomic modesetting, there's "format" and "gamma_size"
     // in the plane struct which needs to be properly handled
 
-    // FIXME: need a good way to handle possible_crtcs
-
-    /// Type of plane
     enum PlaneType {
         OVERLAY = 0,
         PRIMARY = 1,
         CURSOR = 2
-    };
+    }; //!< type of plane
 
-    /// Plane format with modifiers
     struct PlaneFormat {
         union {
             uint32_t format; //!< check drm_fourcc.h for formats
             char fourcc[4];
         };
         std::vector<uint64_t> modifiers;
-    };
+    }; //!< plane format with all supported modifiers
 
     /// Nonvolatile drm plane instance
     class Plane {
@@ -44,7 +40,7 @@ namespace BDRM {
 
         private:
             uint32_t plane_id;
-            std::bitset<32> possible_crtcs;
+            std::bitset<32> possible_crtcs; //!< bitset of possible CRTCs
             std::unordered_map<std::string, uint32_t> props;
 
             Plane(int fd, drmModePlane* plane);

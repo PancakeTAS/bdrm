@@ -20,19 +20,19 @@ namespace BDRM {
             // methods for configurting the crtc
             void setActive(bool active);
             void setMode(const drmModeModeInfo* mode);
-            void setVrr(bool vrr);
+            void setVrr(bool vrr); //!< hint the driver to enable variable refresh rate, does not guarantee it
             void setGammaLut(const std::vector<drm_color_lut>& lut);
             void setCTM(const struct drm_color_ctm* ctm);
             void setDegammaLut(const std::vector<drm_color_lut>& lut);
 
-            private:
+        private:
             const Crtc& crtc;
             const int fd;
             drmModeAtomicReq* req;
-            std::vector<uint32_t> blobs;
+            std::vector<uint32_t> blobs; //!< list of blobs to free
 
             CrtcReq(const Crtc& crtc, const int fd, drmModeAtomicReq* req) : crtc(crtc), fd(fd), req(req) {}
-            void clearProperties();
+            void zeroedRequest(); //!< set all properties to zero
 
     };
 

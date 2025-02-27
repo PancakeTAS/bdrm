@@ -15,7 +15,7 @@
 
 namespace BDRM {
 
-    /// Atomic request class
+    /// Atomic request instance
     class AtomicRequest {
 
         friend class Bdrm;
@@ -23,15 +23,15 @@ namespace BDRM {
         private:
             int fd;
             drmModeAtomicReq* req;
-            std::vector<ConnectorReq> connectors;
+            std::vector<ConnectorReq> connectors; //!< keep track of all resources in order to free them
             std::vector<CrtcReq> crtcs;
             std::vector<PlaneReq> planes;
 
-            AtomicRequest(int fd);
-            AtomicRequest(const int fd, const Resources& resources); //!< creates a property reset request
+            AtomicRequest(int fd); //!< create an empty request
+            AtomicRequest(const int fd, const Resources& resources); //!< create a request zeroing all resources
 
         public:
-            ConnectorReq& addConnector(const Connector& connector);
+            ConnectorReq& addConnector(const Connector& connector); //!< add a resource
             CrtcReq& addCrtc(const Crtc& crtc);
             PlaneReq& addPlane(const Plane& plane);
 

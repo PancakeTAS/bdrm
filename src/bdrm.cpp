@@ -15,25 +15,30 @@ using namespace BDRM;
 Bdrm::Bdrm(std::string_view path) : node(path) {
     int fd = this->node.get_fd();
 
+    // set client capabilities
     if (int ret = drmSetClientCap(fd, DRM_CLIENT_CAP_UNIVERSAL_PLANES, 1))
         throw std::runtime_error("DRM device does not support universal planes (err " + std::to_string(ret) + ")");
 
     if (int ret = drmSetClientCap(fd, DRM_CLIENT_CAP_ATOMIC, 1))
         throw std::runtime_error("DRM device does not support atomic modesetting (err " + std::to_string(ret) + ")");
 
+    // check required capabilities
     uint64_t cap; // TODO: definitely need check more caps
     if (int ret = drmGetCap(fd, DRM_CAP_ADDFB2_MODIFIERS, &cap) || !cap)
         throw std::runtime_error("DRM device does not support modifiers (err " + std::to_string(ret) + ")");
 
+    // get cursor capabilities
     if (drmGetCap(fd, DRM_CAP_CURSOR_WIDTH, &this->cursor_width))
         this->cursor_width = 64;
     if (drmGetCap(fd, DRM_CAP_CURSOR_HEIGHT, &this->cursor_height))
         this->cursor_height = 64;
 
+    // fetch all resources
     this->resources = UP<Resources>(new Resources(fd));
 
+    // zero out all properties
     AtomicRequest request = AtomicRequest(fd, *this->resources);
-    this->commit(request); // this will reset all properties to their default values
+    this->commit(request);
 }
 
 AtomicRequest Bdrm::create_atomic_request() {

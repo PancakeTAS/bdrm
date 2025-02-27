@@ -38,7 +38,7 @@ namespace BDRM {
 
     };
 
-    bool supports_crtc(int fd, uint32_t crtc_idx, std::vector<uint32_t> encoder_ids);
+    bool supports_crtc(int fd, uint32_t crtc_idx, std::vector<uint32_t> encoder_ids); //!< check if a connector's encoders support a CRTC
 
 }
 
