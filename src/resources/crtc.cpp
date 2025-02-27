@@ -1,7 +1,6 @@
 #include "resources/crtc.hpp"
 
 #include <cstring>
-#include <xf86drmMode.h>
 
 using namespace BDRM;
 

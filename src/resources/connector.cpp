@@ -1,16 +1,9 @@
 #include "resources/connector.hpp"
+
 #include <cstring>
 #include <format>
 
-#include <xf86drmMode.h>
-
-extern "C" {
-#include <libdisplay-info/info.h>
-}
-
 using namespace BDRM;
-
-// TODO: ponder whether using "continue" in case of a property failure is the best course of action
 
 Connector::Connector(int fd, drmModeConnector* conn) {
     const char* type_name = drmModeGetConnectorTypeName(conn->connector_type);

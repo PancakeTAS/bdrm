@@ -1,10 +1,11 @@
 #ifndef CRTC_HPP
 #define CRTC_HPP
 
+#include <xf86drmMode.h>
+
 #include <optional>
 #include <string>
 #include <unordered_map>
-#include <xf86drmMode.h>
 
 namespace BDRM {
 

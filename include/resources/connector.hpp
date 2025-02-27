@@ -1,16 +1,17 @@
 #ifndef CONNECTOR_HPP
 #define CONNECTOR_HPP
 
-#include <cstdint>
-#include <optional>
-#include <string>
-#include <unordered_map>
-#include <vector>
 #include <xf86drmMode.h>
 
 extern "C" {
 #include <libdisplay-info/info.h>
 }
+
+#include <cstdint>
+#include <optional>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 namespace BDRM {
 

@@ -1,10 +1,8 @@
 #include "bdrm.hpp"
-#include "atomic.hpp"
-#include "drm_mode.h"
-#include "resources/connector.hpp"
-#include "resources/crtc.hpp"
-#include "resources/plane.hpp"
-#include "utils.hpp"
+
+#include <drm_mode.h>
+#include <xf86drm.h>
+#include <xf86drmMode.h>
 
 #include <bitset>
 #include <cstddef>
@@ -14,14 +12,9 @@
 #include <stdexcept>
 #include <errno.h>
 #include <unistd.h>
-#include <vector>
-#include <xf86drm.h>
 #include <drm.h>
-#include <xf86drmMode.h>
 
 using namespace BDRM;
-
-// node
 
 DeviceNode::DeviceNode(std::string_view path) {
     this->fd = open(path.data(), O_RDWR | O_CLOEXEC);
@@ -32,8 +25,6 @@ DeviceNode::DeviceNode(std::string_view path) {
 DeviceNode::~DeviceNode() {
     close(this->fd);
 }
-
-// init
 
 Bdrm::Bdrm(std::string_view path) : node(path) {
     int fd = this->node.get_fd();

@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB SOURCES
     "src/*.cpp"
     "src/resources/*.cpp"
+    "src/atomic/*.cpp"
 )
 
 include_directories(include)

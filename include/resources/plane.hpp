@@ -1,11 +1,13 @@
 #ifndef PLANE_HPP
 #define PLANE_HPP
 
+#include <xf86drmMode.h>
+
 #include <bitset>
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include <xf86drmMode.h>
+#include <cstdint>
 
 namespace BDRM {
 

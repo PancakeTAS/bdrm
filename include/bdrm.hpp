@@ -2,10 +2,11 @@
 #define BDRM_HPP
 
 #include "atomic.hpp"
-#include "utils.hpp"
 #include "resources/connector.hpp"
 #include "resources/crtc.hpp"
 #include "resources/plane.hpp"
+#include "utils.hpp"
+
 #include <cstdint>
 #include <string_view>
 #include <vector>

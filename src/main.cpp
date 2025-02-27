@@ -1,15 +1,11 @@
-#include "atomic.hpp"
 #include "bdrm.hpp"
-#include "resources/connector.hpp"
-#include "resources/crtc.hpp"
-#include "resources/plane.hpp"
-#include "utils.hpp"
+
+#include <xf86drmMode.h>
+
 #include <algorithm>
 #include <fcntl.h>
 #include <iostream>
 #include <unistd.h>
-#include <vector>
-#include <xf86drmMode.h>
 
 // this is a rapidly changing test file!
 
