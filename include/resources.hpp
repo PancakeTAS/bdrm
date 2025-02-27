@@ -36,7 +36,7 @@ namespace BDRM {
                 OP<std::string> serial = std::nullopt;
             };
             const std::vector<CRef<Connector>> search_connectors(ConnectorQueryArgs args) const;
-        
+
             struct ModeQueryArgs {
                 OP<uint32_t> width = std::nullopt;
                 OP<uint32_t> height = std::nullopt;
@@ -44,7 +44,7 @@ namespace BDRM {
                 OP<uint32_t> max_refresh = std::nullopt; //!< max refresh rate (inclusive)
             };
             const std::vector<drmModeModeInfo> search_modes(ModeQueryArgs args) const;
-        
+
             struct CrtcQueryArgs {
                 OP<CRef<Connector>> connector = std::nullopt; //!< must support this connector
                 OP<bool> gamma_lut = std::nullopt; //!< must support a gamma lut

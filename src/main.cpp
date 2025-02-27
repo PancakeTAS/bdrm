@@ -31,7 +31,7 @@ int main() {
             << "  HDR Metadata: " << (conn.hdr_metadata ? "Available" : "Not Available") << "\n"
             << "  Modes: " << conn.modes.size() << std::endl;
     }
-    
+
     // print crtcs
 
     std::cerr << "Crtcs:" << std::endl;
@@ -67,7 +67,7 @@ int main() {
         auto mode = resources.search_modes({ .width = 1920, .height =  1080, .min_refresh = 59, .max_refresh = 60 }).front();
         auto& crtc = resources.search_crtcs({ .connector = connector }).front().get();
         auto& plane = resources.search_planes({ .crtc = crtc, .type = BDRM::PlaneType::PRIMARY }).front().get();
-        
+
         // build request
         BDRM::AtomicRequest request = bdrm.create_atomic_request();
 

@@ -26,11 +26,11 @@ namespace BDRM {
             void setCrtc(const Crtc& crtc, const drmModeModeInfo* mode) {
                 this->setCrtc(crtc, 0, 0, mode->hdisplay, mode->vdisplay);
             }
-            
+
             private:
             const Plane& plane;
             drmModeAtomicReq* req;
-            
+
             PlaneReq(const Plane& plane, drmModeAtomicReq* req) : plane(plane), req(req) {}
             void clearProperties();
 

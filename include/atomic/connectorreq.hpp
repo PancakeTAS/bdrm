@@ -21,11 +21,11 @@ namespace BDRM {
         public:
             // methods for configuring the connector
             void setCrtc(const Crtc& crtc);
-            
+
             private:
             const Connector& connector;
             drmModeAtomicReq* req;
-            
+
             ConnectorReq(const Connector& connector, drmModeAtomicReq* req) : connector(connector), req(req) {}
             void clearProperties();
 

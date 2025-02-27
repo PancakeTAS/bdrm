@@ -26,12 +26,12 @@ namespace BDRM {
             std::vector<drmModeModeInfo> modes;
             bool connected;
 
-            drmModeSubPixel subpixelLayout; //!< not reliable 
+            drmModeSubPixel subpixelLayout; //!< not reliable
             uint32_t width, height; //!< of the display in mm
 
             bool non_desktop; //!< something like a vr headset
             bool vrr_capable;
-            
+
             std::optional<std::string> make, serial, model; //!< obtained through edid
             std::optional<di_color_primaries> color_primaries;
             std::optional<di_hdr_static_metadata> hdr_metadata;

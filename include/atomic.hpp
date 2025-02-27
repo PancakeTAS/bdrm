@@ -29,12 +29,12 @@ namespace BDRM {
 
             AtomicRequest(int fd);
             AtomicRequest(const int fd, const Resources& resources); //!< creates a property reset request
-            
+
         public:
             ConnectorReq& addConnector(const Connector& connector);
             CrtcReq& addCrtc(const Crtc& crtc);
             PlaneReq& addPlane(const Plane& plane);
-            
+
             ~AtomicRequest();
 
     };

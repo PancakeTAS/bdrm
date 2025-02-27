@@ -19,7 +19,7 @@ void CrtcReq::setMode(const drmModeModeInfo* mode) {
     uint32_t blob_id;
     if (drmModeCreatePropertyBlob(this->fd, mode, sizeof(drmModeModeInfo), &blob_id) < 0)
         throw std::runtime_error("Failed to create mode blob");
-    
+
     SET("MODE_ID", blob_id)
     this->blobs.push_back(blob_id);
 }
@@ -32,7 +32,7 @@ void CrtcReq::setGammaLut(const std::vector<drm_color_lut>& lut) {
     uint32_t blob_id;
     if (drmModeCreatePropertyBlob(this->fd, lut.data(), sizeof(drm_color_lut) * lut.size(), &blob_id) < 0)
         throw std::runtime_error("Failed to create gamma lut blob");
-    
+
     SET("GAMMA_LUT", blob_id)
     this->blobs.push_back(blob_id);
 }
@@ -41,7 +41,7 @@ void CrtcReq::setCTM(const struct drm_color_ctm* ctm) {
     uint32_t blob_id;
     if (drmModeCreatePropertyBlob(this->fd, ctm, sizeof(drm_color_ctm), &blob_id) < 0)
         throw std::runtime_error("Failed to create ctm blob");
-    
+
     SET("CTM", blob_id)
     this->blobs.push_back(blob_id);
 }
@@ -50,7 +50,7 @@ void CrtcReq::setDegammaLut(const std::vector<drm_color_lut>& lut) {
     uint32_t blob_id;
     if (drmModeCreatePropertyBlob(this->fd, lut.data(), sizeof(drm_color_lut) * lut.size(), &blob_id) < 0)
         throw std::runtime_error("Failed to create degamma lut blob");
-    
+
     SET("DEGAMMA_LUT", blob_id)
     this->blobs.push_back(blob_id);
 }

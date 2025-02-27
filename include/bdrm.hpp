@@ -28,7 +28,7 @@ namespace BDRM {
 
             AtomicRequest create_atomic_request(); // <! create a new empty atomic request
             void commit(AtomicRequest& request); // <! commit an atomic request
-        
+
     };
 
 }

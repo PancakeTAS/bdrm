@@ -24,7 +24,7 @@ AtomicRequest::AtomicRequest(const int fd, const Resources& resources) : fd(fd) 
         this->addPlane(plane).clearProperties();
 }
 
-ConnectorReq& AtomicRequest::addConnector(const Connector& connector) { 
+ConnectorReq& AtomicRequest::addConnector(const Connector& connector) {
     this->connectors.push_back(ConnectorReq(connector, this->req));
     return this->connectors.back();
 }

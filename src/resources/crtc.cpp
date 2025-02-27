@@ -11,7 +11,7 @@ Crtc::Crtc(int fd, drmModeCrtc* crtc) {
     for (uint32_t i = 0; i < props->count_props; ++i) {
         drmModePropertyRes* prop = drmModeGetProperty(fd, props->props[i]);
         if (prop == nullptr) continue;
-    
+
         this->props[prop->name] = prop->prop_id;
 
         if (strcmp(prop->name, "GAMMA_LUT_SIZE") == 0) {

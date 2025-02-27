@@ -24,7 +24,7 @@ Resources::Resources(int fd) : fd(fd) {
         this->crtcs.emplace_back(Crtc(fd, crtc));
         drmModeFreeCrtc(crtc);
     }
-    
+
     drmModeFreeResources(res);
 
     drmModePlaneRes* plane_res = drmModeGetPlaneResources(fd);
@@ -136,10 +136,10 @@ const std::vector<CRef<Plane>> Resources::search_planes(PlaneQueryArgs args) con
             auto fmt = std::ranges::find_if(plane.supported_formats, [&](const PlaneFormat& pf) {
                 return pf.format == args.format.value();
             });
-        
+
             if (fmt == plane.supported_formats.end())
                 continue;
-        
+
             if (args.modifier && std::ranges::find(fmt->modifiers, args.modifier.value()) == fmt->modifiers.end())
                 continue;
         }

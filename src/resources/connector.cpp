@@ -30,7 +30,7 @@ Connector::Connector(int fd, drmModeConnector* conn) {
         if (prop == nullptr) continue;
 
         this->props[prop->name] = prop->prop_id;
-    
+
         if (strcmp(prop->name, "non-desktop") == 0) {
             this->non_desktop = conn->prop_values[i];
         } else if (strcmp(prop->name, "vrr_capable") == 0) {
@@ -60,7 +60,7 @@ Connector::Connector(int fd, drmModeConnector* conn) {
             if (char* ptr = di_info_get_model(edid)) {
                 this->model = ptr;
                 free(ptr);
-            
+
             }
 
             if (const di_color_primaries* ptr = di_info_get_default_color_primaries(edid))

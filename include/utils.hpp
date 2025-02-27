@@ -25,12 +25,12 @@ namespace BDRM {
 
     // convenience classes
     class DeviceNode {
-        
+
         friend class Bdrm;
-        
+
         private:
             int fd;
-            
+
             DeviceNode(std::string_view path);
             ~DeviceNode();
 
