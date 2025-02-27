@@ -1,14 +1,16 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
-#include <algorithm>
-#include <memory>
-#include <vector>
+#include <xf86drmMode.h>
 
-// TODO: ponder whether this should be a sub-namespace like BDRM::Utils
+#include <string_view>
+#include <memory>
+#include <optional>
+#include <vector>
 
 namespace BDRM {
 
+    // convenience types
     template <typename T>
     using Ref = std::reference_wrapper<T>;
 
@@ -18,16 +20,26 @@ namespace BDRM {
     template <typename T>
     using UP = std::unique_ptr<T>;
 
-    template <typename T, typename Compare>
-    T* find_first_unique(std::vector<T>& A, const std::vector<T>& B, Compare comp) {
-        for (auto& a : A) {
-            bool found = std::any_of(B.begin(), B.end(), [&](const T& b) { return comp(a, b); });
-            if (!found)
-                return &a;
-        }
-        return nullptr;
-    }
-    
+    template <typename T>
+    using OP = std::optional<T>;
+
+    // convenience classes
+    class DeviceNode {
+        
+        friend class Bdrm;
+        
+        private:
+            int fd;
+            
+            DeviceNode(std::string_view path);
+            ~DeviceNode();
+
+            int get_fd() { return this->fd; }
+
+    };
+
+    bool supports_crtc(int fd, uint32_t crtc_idx, std::vector<uint32_t> encoder_ids);
+
 }
 
 #endif // UTILS_HPP

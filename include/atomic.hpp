@@ -7,6 +7,7 @@
 #include "resources/connector.hpp"
 #include "resources/crtc.hpp"
 #include "resources/plane.hpp"
+#include "resources.hpp"
 
 #include <xf86drmMode.h>
 
@@ -27,6 +28,7 @@ namespace BDRM {
             std::vector<PlaneReq> planes;
 
             AtomicRequest(int fd);
+            AtomicRequest(const int fd, const Resources& resources); //!< creates a property reset request
             
         public:
             ConnectorReq& addConnector(const Connector& connector);

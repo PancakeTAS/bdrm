@@ -1,4 +1,6 @@
 #include "atomic.hpp"
+#include "resources.hpp"
+
 #include <stdexcept>
 
 using namespace BDRM;
@@ -7,6 +9,19 @@ AtomicRequest::AtomicRequest(const int fd) : fd(fd) {
     this->req = drmModeAtomicAlloc();
     if (!this->req)
         throw std::runtime_error("Failed to allocate atomic request");
+}
+
+AtomicRequest::AtomicRequest(const int fd, const Resources& resources) : fd(fd) {
+    this->req = drmModeAtomicAlloc();
+    if (!this->req)
+        throw std::runtime_error("Failed to allocate atomic request");
+
+    for (const Connector& connector : resources.connectors)
+        this->addConnector(connector).clearProperties();
+    for (const Crtc& crtc : resources.crtcs)
+        this->addCrtc(crtc).clearProperties();
+    for (const Plane& plane : resources.planes)
+        this->addPlane(plane).clearProperties();
 }
 
 ConnectorReq& AtomicRequest::addConnector(const Connector& connector) { 

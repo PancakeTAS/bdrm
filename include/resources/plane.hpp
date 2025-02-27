@@ -35,7 +35,7 @@ namespace BDRM {
     /// Nonvolatile drm plane instance
     class Plane {
 
-        friend class Bdrm;
+        friend class Resources;
         friend class PlaneReq;
 
         public:

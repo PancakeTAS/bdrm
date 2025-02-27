@@ -2,7 +2,6 @@
 
 #include <xf86drmMode.h>
 
-#include <algorithm>
 #include <fcntl.h>
 #include <iostream>
 #include <unistd.h>
@@ -11,11 +10,12 @@
 
 int main() {
     BDRM::Bdrm bdrm("/dev/dri/card1");
+    const BDRM::Resources& resources = bdrm.get_resources();
 
     // print connectors
 
     std::cerr << "Connectors:" << std::endl;
-    for (BDRM::CRef<BDRM::Connector> c_conn : bdrm.get_all_connectors()) {
+    for (BDRM::CRef<BDRM::Connector> c_conn : resources.search_connectors({})) {
         const BDRM::Connector& conn = c_conn;
         std::cerr << "Connector:\n"
             << "  Name: " << conn.name << "\n"
@@ -35,7 +35,7 @@ int main() {
     // print crtcs
 
     std::cerr << "Crtcs:" << std::endl;
-    for (BDRM::CRef<BDRM::Crtc> c_crtc : bdrm.get_all_crtcs()) {
+    for (BDRM::CRef<BDRM::Crtc> c_crtc : resources.search_crtcs({})) {
         const BDRM::Crtc& crtc = c_crtc;
         std::cerr << "Crtc:\n"
             << "  Gamma LUT Size: " << (crtc.gamma_lut_size ? *crtc.gamma_lut_size : 0) << "\n"
@@ -47,7 +47,7 @@ int main() {
     // print planes
 
     std::cerr << "Planes:" << std::endl;
-    for (BDRM::CRef<BDRM::Plane> c_plane : bdrm.get_all_planes()) {
+    for (BDRM::CRef<BDRM::Plane> c_plane : resources.search_planes({})) {
         const BDRM::Plane& plane = c_plane;
         std::cerr << "Plane:\n"
             << "  Type: " << plane.type << "\n"
@@ -63,19 +63,11 @@ int main() {
     {
 
         // get the integrated display
-        auto connectors = bdrm.get_all_connectors();
-        auto connector = std::find_if(connectors.begin(), connectors.end(), [](auto c) {
-            return c.get().name == "eDP-1";
-        })->get();
-
-        auto mode = std::find_if(connector.modes.begin(), connector.modes.end(), [](auto m) {
-            return m.hdisplay == 1920 && m.vdisplay == 1080 && m.vrefresh == 60;
-        })[0];
-
-        // find a suitable crtc and plane
-        auto crtc = bdrm.suitable_crtcs(connector).front().get();
-        auto plane = bdrm.suitable_planes(crtc, BDRM::PlaneType::PRIMARY).front().get();
-
+        auto& connector = resources.search_connectors({ .name = "eDP-1", .connected = true} ).front().get();
+        auto mode = resources.search_modes({ .width = 1920, .height =  1080, .min_refresh = 59, .max_refresh = 60 }).front();
+        auto& crtc = resources.search_crtcs({ .connector = connector }).front().get();
+        auto& plane = resources.search_planes({ .crtc = crtc, .type = BDRM::PlaneType::PRIMARY }).front().get();
+        
         // build request
         BDRM::AtomicRequest request = bdrm.create_atomic_request();
 

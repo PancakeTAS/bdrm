@@ -12,7 +12,7 @@ namespace BDRM {
     /// Nonvolatile drm ctrc instance
     class Crtc {
 
-        friend class Bdrm;
+        friend class Resources;
         friend class ConnectorReq;
         friend class CrtcReq;
         friend class PlaneReq;

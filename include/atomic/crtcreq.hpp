@@ -24,15 +24,15 @@ namespace BDRM {
             void setGammaLut(const std::vector<drm_color_lut>& lut);
             void setCTM(const struct drm_color_ctm* ctm);
             void setDegammaLut(const std::vector<drm_color_lut>& lut);
-            void clearProperties(); //!< set all properties to default
-
-        private:
+            
+            private:
             const Crtc& crtc;
             const int fd;
             drmModeAtomicReq* req;
             std::vector<uint32_t> blobs;
-
+            
             CrtcReq(const Crtc& crtc, const int fd, drmModeAtomicReq* req) : crtc(crtc), fd(fd), req(req) {}
+            void clearProperties();
 
     };
 

@@ -18,7 +18,7 @@ namespace BDRM {
     /// Nonvolatile drm connector instance
     class Connector {
 
-        friend class Bdrm;
+        friend class Resources;
         friend class ConnectorReq;
 
         public:
