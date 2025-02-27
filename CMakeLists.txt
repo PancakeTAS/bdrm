@@ -12,19 +12,22 @@ file(GLOB SOURCES
     "src/*.cpp"
     "src/resources/*.cpp"
     "src/atomic/*.cpp"
+    "src/utils/*.cpp"
 )
 
 include_directories(include)
 include_directories(SYSTEM /usr/include/libdrm) # workaround
 
 add_executable(bdrm ${SOURCES})
-target_link_libraries(bdrm drm display-info)
+target_link_libraries(bdrm drm display-info gbm)
 
 target_compile_options(bdrm PRIVATE
     -Weverything
     -Wno-shadow
     -Wno-padded
     -Wno-c++98-compat
+    -Wno-c++98-compat-pedantic
     -Wno-unsafe-buffer-usage
     -Wno-pre-c++20-compat-pedantic
+    -Wno-old-style-cast
 )

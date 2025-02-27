@@ -1,6 +1,7 @@
 #ifndef PLANEREQ_HPP
 #define PLANEREQ_HPP
 
+#include "resources/framebuffer.hpp"
 #include "resources/plane.hpp"
 #include "resources/crtc.hpp"
 
@@ -18,10 +19,10 @@ namespace BDRM {
 
         public:
             // methods for configuring the plane
-            void setFb(uint32_t fb_id, uint32_t x, uint32_t y, uint32_t w, uint32_t h);
-            /*void setFb(uint32_t fb_id) { // FIXME: class for framebuffer
-                throw std::runtime_error("Not implemented!");
-            }*/
+            void setFb(const Framebuffer& fb, uint32_t x, uint32_t y, uint32_t w, uint32_t h);
+            void setFb(const Framebuffer& fb) {
+                this->setFb(fb, 0, 0, fb.width, fb.height);
+            }
             void setCrtc(const Crtc& crtc, uint32_t x, uint32_t y, uint32_t w, uint32_t h);
             void setCrtc(const Crtc& crtc, const drmModeModeInfo* mode) {
                 this->setCrtc(crtc, 0, 0, mode->hdisplay, mode->vdisplay);

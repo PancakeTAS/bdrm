@@ -1,4 +1,5 @@
 #include "atomic/planereq.hpp"
+#include "resources/framebuffer.hpp"
 
 #include <stdexcept>
 
@@ -19,8 +20,8 @@ void PlaneReq::setCrtc(const Crtc& crtc, uint32_t x, uint32_t y, uint32_t w, uin
     SET("CRTC_H", h)
 }
 
-void PlaneReq::setFb(uint32_t fb_id, uint32_t x, uint32_t y, uint32_t w, uint32_t h) {
-    SET("FB_ID", fb_id)
+void PlaneReq::setFb(const Framebuffer& fb, uint32_t x, uint32_t y, uint32_t w, uint32_t h) {
+    SET("FB_ID", fb.fb_id)
     SET("SRC_X", x << 16)
     SET("SRC_Y", y << 16)
     SET("SRC_W", w << 16)

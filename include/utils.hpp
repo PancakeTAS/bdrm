@@ -2,6 +2,7 @@
 #define UTILS_HPP
 
 #include <xf86drmMode.h>
+#include <gbm.h>
 
 #include <string_view>
 #include <memory>
@@ -21,6 +22,9 @@ namespace BDRM {
     using UP = std::unique_ptr<T>;
 
     template <typename T>
+    using SP = std::shared_ptr<T>;
+
+    template <typename T>
     using OP = std::optional<T>;
 
     // convenience classes
@@ -30,11 +34,15 @@ namespace BDRM {
 
         private:
             int fd;
+            struct gbm_device* gbm;
 
             DeviceNode(std::string_view path);
-            ~DeviceNode();
 
             int get_fd() { return this->fd; }
+            struct gbm_device* get_gbm() { return this->gbm; }
+
+        public:
+            ~DeviceNode();
 
     };
 

@@ -61,8 +61,6 @@ namespace BDRM {
             }; //!< query arguments for searching planes
             const std::vector<CRef<Plane>> search_planes(PlaneQueryArgs args) const; //!< search for specific planes
 
-            // TODO: function that takes a map of connectors, crtcs and planes and returns a valid configuration
-
     };
 
 }
