@@ -71,10 +71,13 @@ Connector::Connector(int fd, drmModeConnector* conn) {
                 free(ptr);
             }
 
-            if (const di_color_primaries* ptr = di_info_get_default_color_primaries(edid))
-                this->color_primaries.emplace(*ptr);
-            if (const di_hdr_static_metadata* ptr = di_info_get_hdr_static_metadata(edid))
-                this->hdr_metadata.emplace(*ptr);
+            this->color_primaries.emplace(*di_info_get_default_color_primaries(edid));
+            this->hdr_metadata.emplace(*di_info_get_hdr_static_metadata(edid));
+            if ((this->hdr_metadata->desired_content_max_luminance
+                + this->hdr_metadata->desired_content_min_luminance
+                + this->hdr_metadata->desired_content_max_frame_avg_luminance) <= 0) {
+                this->hdr_metadata.reset();
+            }
 
             di_info_destroy(edid);
             drmModeFreePropertyBlob(blob);
