@@ -4,7 +4,6 @@
 #include "resources/crtc.hpp"
 
 #include <xf86drmMode.h>
-#include <drm_mode.h>
 
 #include <cstdint>
 #include <vector>

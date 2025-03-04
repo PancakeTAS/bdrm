@@ -1,10 +1,12 @@
 #ifndef RESOURCES_HPP
 #define RESOURCES_HPP
 
+#include "bdrm/types.hpp"
 #include "resources/connector.hpp"
 #include "resources/crtc.hpp"
 #include "resources/plane.hpp"
-#include "utils.hpp"
+
+#include <vector>
 
 // forward decl
 namespace BDRM::Atomic { class AtomicRequest; }
@@ -12,7 +14,7 @@ namespace BDRM { class Bdrm; }
 
 namespace BDRM::Resources {
 
-    using namespace BDRM::Utils;
+    using namespace BDRM;
 
     /// DRM resources
     class Res {

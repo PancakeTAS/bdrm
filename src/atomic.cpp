@@ -1,5 +1,4 @@
 #include "atomic.hpp"
-#include "resources.hpp"
 
 #include <stdexcept>
 

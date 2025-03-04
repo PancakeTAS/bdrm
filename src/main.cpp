@@ -1,11 +1,8 @@
 #include "bdrm.hpp"
 
 #include <libdrm/drm_fourcc.h>
-#include <xf86drmMode.h>
 
-#include <fcntl.h>
 #include <iostream>
-#include <unistd.h>
 
 // this is a rapidly changing test file!
 
@@ -57,7 +54,7 @@ int main() {
 
         // allocate a framebuffer
         std::vector<uint64_t> modifiers = { 0x0300000000606015 }; // some hardcoded nvidia modifier
-        const BDRM::Framebuffer& fb = bdrm.create_framebuffer(
+        const BDRM::Buffer& fb = bdrm.allocate_framebuffer(
             mode.hdisplay, mode.vdisplay,
             DRM_FORMAT_XRGB8888, modifiers,
             false

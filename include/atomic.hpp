@@ -9,8 +9,6 @@
 #include "resources/plane.hpp"
 #include "resources.hpp"
 
-#include <xf86drmMode.h>
-
 #include <vector>
 
 // forward decl

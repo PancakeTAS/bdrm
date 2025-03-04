@@ -1,12 +1,11 @@
 #ifndef PLANEREQ_HPP
 #define PLANEREQ_HPP
 
-#include "resources/framebuffer.hpp"
 #include "resources/plane.hpp"
 #include "resources/crtc.hpp"
+#include "bdrm/buffer.hpp"
 
 #include <xf86drmMode.h>
-#include <drm_mode.h>
 
 #include <cstdint>
 
@@ -21,8 +20,8 @@ namespace BDRM::Atomic {
 
         public:
             // methods for configuring the plane
-            void setFb(const Framebuffer& fb, uint32_t x, uint32_t y, uint32_t w, uint32_t h);
-            void setFb(const Framebuffer& fb) {
+            void setFb(const Buffer& fb, uint32_t x, uint32_t y, uint32_t w, uint32_t h);
+            void setFb(const Buffer& fb) {
                 this->setFb(fb, 0, 0, fb.width, fb.height);
             }
             void setCrtc(const Crtc& crtc, uint32_t x, uint32_t y, uint32_t w, uint32_t h);
