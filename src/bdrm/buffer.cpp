@@ -1,5 +1,6 @@
 #include "bdrm/buffer.hpp"
 
+#include <gbm.h>
 #include <xf86drmMode.h>
 #include <drm_fourcc.h>
 
@@ -91,21 +92,21 @@ Buffer::Buffer(int fd, struct gbm_device* gbm,
         this->modifier = std::nullopt;
 
     int num_planes = gbm_bo_get_plane_count(bo);
+    std::array<uint64_t, 4> used_modifiers = { 0, 0, 0, 0 };
     for (int i = 0; i < num_planes; i++) {
         this->stride[i] = gbm_bo_get_stride_for_plane(bo, i);
         this->offset[i] = gbm_bo_get_offset(bo, i);
         this->handle[i] = gbm_bo_get_handle_for_plane(bo, i).u32;
+        used_modifiers[static_cast<size_t>(i)] = gbm_bo_get_modifier(bo);
     }
 
     // add buffer to drm
     int ret = 0;
     if (this->modifier.has_value()) {
-        std::array<uint64_t, 4> modifiers = { 0, 0, 0, 0 };
-        modifiers[0] = this->modifier.value();
         ret = drmModeAddFB2WithModifiers(fd,
             this->width, this->height, this->format,
             this->handle, this->stride, this->offset,
-            modifiers.data(), &this->fb_id, DRM_MODE_FB_MODIFIERS);
+            used_modifiers.data(), &this->fb_id, DRM_MODE_FB_MODIFIERS);
     } else {
         ret = drmModeAddFB2(fd,
             this->width, this->height, this->format,
