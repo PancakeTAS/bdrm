@@ -10,7 +10,9 @@
 
 #include <cstdint>
 
-namespace BDRM {
+namespace BDRM::Atomic {
+
+    using namespace BDRM::Resources;
 
     /// Plane request properties
     class PlaneReq {

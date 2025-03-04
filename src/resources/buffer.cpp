@@ -3,7 +3,7 @@
 #include <gbm.h>
 #include <drm_fourcc.h>
 
-using namespace BDRM;
+using namespace BDRM::Resources;
 
 Buffer::Buffer(struct gbm_bo* bo) {
     this->bo = bo;

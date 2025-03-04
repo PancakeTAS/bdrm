@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-using namespace BDRM;
+using namespace BDRM::Atomic;
 
 #define SET(prop_name, value) \
     { auto prop = this->crtc.props.find(prop_name); \

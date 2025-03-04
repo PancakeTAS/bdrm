@@ -33,7 +33,7 @@ Bdrm::Bdrm(std::string_view path) : node(path) {
         this->cursor_height = 64;
 
     // fetch all resources
-    this->resources = UP<Resources>(new Resources(fd));
+    this->resources = UP<Res>(new Res(fd));
 
     // zero out all properties
     AtomicRequest request = AtomicRequest(fd, *this->resources);

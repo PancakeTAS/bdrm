@@ -9,13 +9,19 @@
 
 #include <optional>
 
-namespace BDRM {
+// forward decl
+namespace BDRM::Atomic { class PlaneReq; }
+namespace BDRM { class Bdrm; }
+
+namespace BDRM::Resources {
+
+    using namespace BDRM::Utils;
 
     /// Nonvolatile drm framebuffer instance
     class Framebuffer {
 
-        friend class Bdrm;
-        friend class PlaneReq;
+        friend class BDRM::Bdrm;
+        friend class BDRM::Atomic::PlaneReq;
 
         public:
             uint32_t width, height;

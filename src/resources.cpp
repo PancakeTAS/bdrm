@@ -1,8 +1,8 @@
 #include "resources.hpp"
 
-using namespace BDRM;
+using namespace BDRM::Resources;
 
-Resources::Resources(int fd) : fd(fd) {
+Res::Res(int fd) : fd(fd) {
     drmModeRes* res = drmModeGetResources(fd);
     if (res == nullptr)
         throw std::runtime_error("Failed to get drm resources");
@@ -43,7 +43,7 @@ Resources::Resources(int fd) : fd(fd) {
     drmModeFreePlaneResources(plane_res);
 }
 
-const std::vector<CRef<Connector>> Resources::search_connectors(ConnectorQueryArgs args) const {
+const std::vector<CRef<Connector>> Res::search_connectors(ConnectorQueryArgs args) const {
     std::vector<CRef<Connector>> found_connectors;
     for (const Connector& conn : this->connectors) {
         if (args.name.has_value() && conn.name != args.name.value())
@@ -69,7 +69,7 @@ const std::vector<CRef<Connector>> Resources::search_connectors(ConnectorQueryAr
     return found_connectors;
 }
 
-const std::vector<drmModeModeInfo> Resources::search_modes(ModeQueryArgs args) const {
+const std::vector<drmModeModeInfo> Res::search_modes(ModeQueryArgs args) const {
     std::vector<drmModeModeInfo> found_modes;
     for (const Connector& conn : this->connectors) {
         for (const drmModeModeInfo& mode : conn.modes) {
@@ -89,7 +89,7 @@ const std::vector<drmModeModeInfo> Resources::search_modes(ModeQueryArgs args) c
     return found_modes;
 }
 
-const std::vector<CRef<Crtc>> Resources::search_crtcs(CrtcQueryArgs args) const {
+const std::vector<CRef<Crtc>> Res::search_crtcs(CrtcQueryArgs args) const {
     std::vector<CRef<Crtc>> found_crtcs;
     for (uint32_t i = 0; i < this->crtcs.size(); i++) {
         const Crtc& crtc = this->crtcs[i];
@@ -111,7 +111,7 @@ const std::vector<CRef<Crtc>> Resources::search_crtcs(CrtcQueryArgs args) const 
     return found_crtcs;
 }
 
-const std::vector<CRef<Plane>> Resources::search_planes(PlaneQueryArgs args) const {
+const std::vector<CRef<Plane>> Res::search_planes(PlaneQueryArgs args) const {
     // find the CRTC index for later
     std::optional<uint32_t> crtc_idx = std::nullopt;
     if (args.crtc.has_value()) {

@@ -9,7 +9,9 @@
 #include <cstdint>
 #include <vector>
 
-namespace BDRM {
+namespace BDRM::Atomic {
+
+    using namespace BDRM::Resources;
 
     /// CRTC request properties
     class CrtcReq {

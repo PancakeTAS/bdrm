@@ -11,7 +11,9 @@
 
 // TODO: understanding explicit sync or whatever these fences do
 
-namespace BDRM {
+namespace BDRM::Atomic {
+
+    using namespace BDRM::Resources;
 
     /// Connector request properties
     class ConnectorReq {

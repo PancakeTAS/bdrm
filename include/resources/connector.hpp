@@ -13,13 +13,16 @@ extern "C" {
 #include <unordered_map>
 #include <vector>
 
-namespace BDRM {
+// forward decl
+namespace BDRM::Atomic { class ConnectorReq; }
+
+namespace BDRM::Resources {
 
     /// Nonvolatile drm connector instance
     class Connector {
 
-        friend class Resources;
-        friend class ConnectorReq;
+        friend class Res;
+        friend class BDRM::Atomic::ConnectorReq;
 
         public:
             std::string name; //!< e.g. "HDMI-A-1"

@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <bitset>
 
-using namespace BDRM;
+using namespace BDRM::Utils;
 
 DeviceNode::DeviceNode(std::string_view path) {
     this->fd = open(path.data(), O_RDWR | O_CLOEXEC);
@@ -26,7 +26,7 @@ DeviceNode::~DeviceNode() {
     close(this->fd);
 }
 
-bool BDRM::supports_crtc(int fd, uint32_t crtc_idx, std::vector<uint32_t> encoder_ids) {
+bool BDRM::Utils::supports_crtc(int fd, uint32_t crtc_idx, std::vector<uint32_t> encoder_ids) {
     for (uint32_t encoder_id : encoder_ids) {
         drmModeEncoder* encoder = drmModeGetEncoder(fd, encoder_id);
         if (encoder == nullptr) continue;

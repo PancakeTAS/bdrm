@@ -9,7 +9,10 @@
 #include <vector>
 #include <cstdint>
 
-namespace BDRM {
+// forward decl
+namespace BDRM::Atomic { class PlaneReq; }
+
+namespace BDRM::Resources {
 
     // FIXME: when not doing atomic modesetting, there's "format" and "gamma_size"
     // in the plane struct which needs to be properly handled
@@ -31,8 +34,8 @@ namespace BDRM {
     /// Nonvolatile drm plane instance
     class Plane {
 
-        friend class Resources;
-        friend class PlaneReq;
+        friend class Res;
+        friend class BDRM::Atomic::PlaneReq;
 
         public:
             PlaneType type = PRIMARY;

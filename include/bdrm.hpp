@@ -11,19 +11,22 @@
 
 namespace BDRM {
 
+    using namespace BDRM::Resources;
+    using namespace BDRM::Atomic;
+
     /// Main class for interfacing with the DRM subsystem
     class Bdrm {
 
         private:
             DeviceNode node; //!< fd
-            UP<Resources> resources; //!< connectors, crtcs, planes
+            UP<Res> resources; //!< connectors, crtcs, planes
             uint64_t cursor_width, cursor_height;
             std::vector<UP<Framebuffer>> framebuffers; //!< framebuffers
 
         public:
             Bdrm(std::string_view path); //!< open the device node and reset all properties
 
-            const Resources& get_resources() { return *this->resources; } //!< get the resources
+            const Res& get_resources() { return *this->resources; } //!< get the resources
 
             uint64_t get_cursor_width() { return this->cursor_width; } //!< preferred width of the cursor plane
             uint64_t get_cursor_height() { return this->cursor_height; } //!< preferred height

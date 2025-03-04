@@ -4,9 +4,9 @@
 
 #include <stdexcept>
 
-using namespace BDRM;
+using namespace BDRM::Utils;
 
-struct gbm_bo* BDRM::allocate_gbm_buffer(
+struct gbm_bo* BDRM::Utils::allocate_gbm_buffer(
     struct gbm_device* gbm, uint32_t width, uint32_t height,
     uint32_t format, std::vector<uint64_t> modifiers, bool is_cursor
 ) {
@@ -67,4 +67,3 @@ struct gbm_bo* BDRM::allocate_gbm_buffer(
 
     return buf;
 }
-

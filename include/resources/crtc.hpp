@@ -7,15 +7,22 @@
 #include <string>
 #include <unordered_map>
 
-namespace BDRM {
+// forward decl
+namespace BDRM::Atomic {
+    class ConnectorReq;
+    class CrtcReq;
+    class PlaneReq;
+}
+
+namespace BDRM::Resources {
 
     /// Nonvolatile drm ctrc instance
     class Crtc {
 
-        friend class Resources;
-        friend class ConnectorReq;
-        friend class CrtcReq;
-        friend class PlaneReq;
+        friend class Res;
+        friend class BDRM::Atomic::ConnectorReq;
+        friend class BDRM::Atomic::CrtcReq;
+        friend class BDRM::Atomic::PlaneReq;
 
         public:
             std::optional<size_t> gamma_lut_size; //!< amount of rows in the gamma lut

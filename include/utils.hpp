@@ -9,7 +9,10 @@
 #include <optional>
 #include <vector>
 
-namespace BDRM {
+// forward decl
+namespace BDRM { class Bdrm; }
+
+namespace BDRM::Utils {
 
     // convenience types
     template <typename T>
@@ -30,7 +33,7 @@ namespace BDRM {
     // convenience classes
     class DeviceNode {
 
-        friend class Bdrm;
+        friend class BDRM::Bdrm;
 
         private:
             int fd;

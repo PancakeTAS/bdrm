@@ -6,16 +6,22 @@
 #include "resources/plane.hpp"
 #include "utils.hpp"
 
-namespace BDRM {
+// forward decl
+namespace BDRM::Atomic { class AtomicRequest; }
+namespace BDRM { class Bdrm; }
+
+namespace BDRM::Resources {
+
+    using namespace BDRM::Utils;
 
     /// DRM resources
-    class Resources {
+    class Res {
 
-        friend class Bdrm;
-        friend class AtomicRequest;
+        friend class BDRM::Bdrm;
+        friend class BDRM::Atomic::AtomicRequest;
 
         private:
-            Resources(int fd); //!< fetch all resources
+            Res(int fd); //!< fetch all resources
             int fd;
 
             std::vector<Connector> connectors;

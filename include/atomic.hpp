@@ -13,12 +13,17 @@
 
 #include <vector>
 
-namespace BDRM {
+// forward decl
+namespace BDRM { class Bdrm; }
+
+namespace BDRM::Atomic {
+
+    using namespace BDRM::Resources;
 
     /// Atomic request instance
     class AtomicRequest {
 
-        friend class Bdrm;
+        friend class BDRM::Bdrm;
 
         private:
             int fd;
@@ -28,7 +33,7 @@ namespace BDRM {
             std::vector<PlaneReq> planes;
 
             AtomicRequest(int fd); //!< create an empty request
-            AtomicRequest(const int fd, const Resources& resources); //!< create a request zeroing all resources
+            AtomicRequest(const int fd, const Res& resources); //!< create a request zeroing all resources
 
         public:
             ConnectorReq& addConnector(const Connector& connector); //!< add a resource

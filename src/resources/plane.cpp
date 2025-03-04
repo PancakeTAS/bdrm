@@ -2,7 +2,7 @@
 
 #include <cstring>
 
-using namespace BDRM;
+using namespace BDRM::Resources;
 
 Plane::Plane(int fd, drmModePlane* plane) {
     // copy basic properties

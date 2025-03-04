@@ -2,7 +2,7 @@
 
 #include <cstring>
 
-using namespace BDRM;
+using namespace BDRM::Resources;
 
 Crtc::Crtc(int fd, drmModeCrtc* crtc) {
     // copy basic properties

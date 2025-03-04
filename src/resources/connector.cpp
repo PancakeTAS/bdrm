@@ -3,7 +3,7 @@
 #include <cstring>
 #include <format>
 
-using namespace BDRM;
+using namespace BDRM::Resources;
 
 Connector::Connector(int fd, drmModeConnector* conn) {
     // format name

@@ -5,7 +5,7 @@
 
 #include <vector>
 
-namespace BDRM {
+namespace BDRM::Utils {
 
     struct gbm_bo* allocate_gbm_buffer(
         struct gbm_device* gbm, uint32_t width, uint32_t height,

@@ -6,12 +6,15 @@
 
 #include <optional>
 
-namespace BDRM {
+// forward decl
+namespace BDRM { class Bdrm; }
+
+namespace BDRM::Resources {
 
     /// Nonvolatile gbm buffer instance
     class Buffer {
 
-        friend class Bdrm;
+        friend class BDRM::Bdrm;
 
         public:
             uint32_t width, height;

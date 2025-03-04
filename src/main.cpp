@@ -11,13 +11,12 @@
 
 int main() {
     BDRM::Bdrm bdrm("/dev/dri/card1");
-    const BDRM::Resources& resources = bdrm.get_resources();
+    const BDRM::Res& resources = bdrm.get_resources();
 
     // create an atomic request
     {
 
-        // get dp-2
-        auto& connector = resources.search_connectors({ .name = "DP-2", .connected = true} ).front().get();
+        auto& connector = resources.search_connectors({ .name = "eDP-1", .connected = true} ).front().get();
         std::cerr << "Connector:\n"
             << "  Name: " << connector.name << "\n"
             << "  Connected: " << (connector.connected ? "Yes" : "No") << "\n"
@@ -32,7 +31,7 @@ int main() {
             << "  HDR Metadata: " << (connector.hdr_metadata ? "Available" : "Not Available") << "\n"
             << "  Modes: " << connector.modes.size() << std::endl;
 
-        auto mode = resources.search_modes({ .width = 2560, .height = 1440, .min_refresh = 239, .max_refresh = 240 }).front();
+        auto mode = resources.search_modes({ .width = 1920, .height = 1080, .min_refresh = 59, .max_refresh = 60 }).front();
         std::cerr << "Mode:\n"
             << "  Name: " << mode.name << "\n"
             << "  Dimensions: " << mode.hdisplay << "x" << mode.vdisplay << "\n"

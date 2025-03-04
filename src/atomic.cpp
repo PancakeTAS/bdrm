@@ -3,7 +3,7 @@
 
 #include <stdexcept>
 
-using namespace BDRM;
+using namespace BDRM::Atomic;
 
 AtomicRequest::AtomicRequest(const int fd) : fd(fd) {
     this->req = drmModeAtomicAlloc();
@@ -11,7 +11,7 @@ AtomicRequest::AtomicRequest(const int fd) : fd(fd) {
         throw std::runtime_error("Failed to allocate atomic request");
 }
 
-AtomicRequest::AtomicRequest(const int fd, const Resources& resources) : fd(fd) {
+AtomicRequest::AtomicRequest(const int fd, const Res& resources) : fd(fd) {
     this->req = drmModeAtomicAlloc();
     if (!this->req)
         throw std::runtime_error("Failed to allocate atomic request");

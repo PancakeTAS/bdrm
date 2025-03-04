@@ -3,7 +3,7 @@
 #include <drm_fourcc.h>
 #include <xf86drmMode.h>
 
-using namespace BDRM;
+using namespace BDRM::Resources;
 
 Framebuffer::Framebuffer(int fd, drmModeFB2* fb, SP<Buffer> buffer) : fd(fd) {
     this->fb_id = fb->fb_id;
