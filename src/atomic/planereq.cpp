@@ -11,7 +11,7 @@ using namespace BDRM::Atomic;
     if (drmModeAtomicAddProperty(req, this->plane.plane_id, prop->second, value) < 0) \
         throw std::runtime_error("Failed to add " prop_name " property to atomic request"); }
 
-void PlaneReq::setCrtc(const Crtc& crtc, uint32_t x, uint32_t y, uint32_t w, uint32_t h) {
+void PlaneReq::setCrtc(const BDRM::Resources::Crtc& crtc, uint32_t x, uint32_t y, uint32_t w, uint32_t h) {
     SET("CRTC_ID", crtc.crtc_id)
     SET("CRTC_X", x)
     SET("CRTC_Y", y)

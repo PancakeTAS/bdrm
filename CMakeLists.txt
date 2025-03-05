@@ -15,11 +15,11 @@ file(GLOB SOURCES
     "src/resources/*.cpp"
 )
 
-include_directories(include)
 include_directories(SYSTEM /usr/include/libdrm) # workaround
 
-add_executable(bdrm ${SOURCES})
+add_library(bdrm STATIC ${SOURCES})
 target_link_libraries(bdrm drm display-info gbm)
+target_include_directories(bdrm PUBLIC include)
 
 target_compile_options(bdrm PRIVATE
     -Weverything

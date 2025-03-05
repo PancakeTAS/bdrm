@@ -1,4 +1,6 @@
 #include "resources.hpp"
+#include "bdrm/types.hpp"
+#include <vector>
 
 using namespace BDRM::Resources;
 
@@ -43,8 +45,8 @@ Res::Res(int fd) : fd(fd) {
     drmModeFreePlaneResources(plane_res);
 }
 
-const std::vector<CRef<Connector>> Res::search_connectors(ConnectorQueryArgs args) const {
-    std::vector<CRef<Connector>> found_connectors;
+const std::vector<BDRM::CRef<Connector>> Res::search_connectors(ConnectorQueryArgs args) const {
+    std::vector<BDRM::CRef<Connector>> found_connectors;
     for (const Connector& conn : this->connectors) {
         if (args.name.has_value() && conn.name != args.name.value())
             continue;
@@ -108,8 +110,8 @@ static bool supports_crtc(int fd, uint32_t crtc_idx, std::vector<uint32_t> encod
 }
 
 
-const std::vector<CRef<Crtc>> Res::search_crtcs(CrtcQueryArgs args) const {
-    std::vector<CRef<Crtc>> found_crtcs;
+const std::vector<BDRM::CRef<Crtc>> Res::search_crtcs(CrtcQueryArgs args) const {
+    std::vector<BDRM::CRef<Crtc>> found_crtcs;
     for (uint32_t i = 0; i < this->crtcs.size(); i++) {
         const Crtc& crtc = this->crtcs[i];
 
@@ -130,7 +132,7 @@ const std::vector<CRef<Crtc>> Res::search_crtcs(CrtcQueryArgs args) const {
     return found_crtcs;
 }
 
-const std::vector<CRef<Plane>> Res::search_planes(PlaneQueryArgs args) const {
+const std::vector<BDRM::CRef<Plane>> Res::search_planes(PlaneQueryArgs args) const {
     // find the CRTC index for later
     std::optional<uint32_t> crtc_idx = std::nullopt;
     if (args.crtc.has_value()) {
@@ -170,4 +172,21 @@ const std::vector<CRef<Plane>> Res::search_planes(PlaneQueryArgs args) const {
     }
 
     return found_planes;
+}
+
+const std::vector<BDRM::CRef<PlaneFormat>> Res::search_plane_formats(PlaneFormatQueryArgs args) const {
+    std::vector<CRef<PlaneFormat>> found_formats;
+    for (const Plane& plane : this->planes) {
+        if (args.plane.has_value() && plane.plane_id != args.plane->get().plane_id)
+            continue;
+
+        for (const PlaneFormat& fmt : plane.supported_formats) {
+            if (args.format.has_value() && fmt.format != args.format.value())
+                continue;
+
+            found_formats.push_back(fmt);
+        }
+    }
+
+    return found_formats;
 }

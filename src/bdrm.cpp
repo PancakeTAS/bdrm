@@ -31,18 +31,18 @@ Bdrm::Bdrm(std::string_view path) : node(path) {
         this->cursor_height = 64;
 
     // fetch all resources
-    this->resources = UP<Res>(new Res(fd));
+    this->resources = UP<BDRM::Resources::Res>(new BDRM::Resources::Res(fd));
 
     // zero out all properties
-    AtomicRequest request = AtomicRequest(fd, *this->resources);
+    BDRM::Atomic::AtomicRequest request = BDRM::Atomic::AtomicRequest(fd, *this->resources);
     this->commit(request);
 }
 
-AtomicRequest Bdrm::create_atomic_request() {
-    return AtomicRequest(this->node.get_fd());
+BDRM::Atomic::AtomicRequest Bdrm::create_atomic_request() {
+    return BDRM::Atomic::AtomicRequest(this->node.get_fd());
 }
 
-void Bdrm::commit(AtomicRequest& request) {
+void Bdrm::commit(BDRM::Atomic::AtomicRequest& request) {
     if (drmModeAtomicCommit(this->node.get_fd(), request.req, DRM_MODE_ATOMIC_ALLOW_MODESET, nullptr) < 0)
         throw std::runtime_error("Failed to commit atomic request");
 }

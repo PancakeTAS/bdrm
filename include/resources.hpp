@@ -14,8 +14,6 @@ namespace BDRM { class Bdrm; }
 
 namespace BDRM::Resources {
 
-    using namespace BDRM;
-
     /// DRM resources
     class Res {
 
@@ -68,6 +66,12 @@ namespace BDRM::Resources {
                 OP<uint64_t> modifier = std::nullopt; //!< format must be set!
             }; //!< query arguments for searching planes
             const std::vector<CRef<Plane>> search_planes(PlaneQueryArgs args) const; //!< search for specific planes
+
+            struct PlaneFormatQueryArgs {
+                OP<CRef<Plane>> plane = std::nullopt; //!< must support this plane
+                OP<uint32_t> format = std::nullopt;
+            };
+            const std::vector<CRef<PlaneFormat>> search_plane_formats(PlaneFormatQueryArgs args) const; //!< search for specific plane format
 
     };
 

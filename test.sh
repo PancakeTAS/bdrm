@@ -16,7 +16,6 @@ rsync -avz \
     . $REMOTE_SSH_USER@$REMOTE_IP:/tmp/bdrm
 
 # configure the remote project
-
 ssh -t -i $REMOTE_SSH_KEY $REMOTE_SSH_USER@$REMOTE_IP \
     "cd /tmp/bdrm && cmake -G Ninja -B build -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=Debug"
 

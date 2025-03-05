@@ -11,7 +11,7 @@ using namespace BDRM::Atomic;
     if (drmModeAtomicAddProperty(req, this->connector.conn_id, prop->second, value) < 0) \
         throw std::runtime_error("Failed to add " prop_name " property to atomic request"); }
 
-void ConnectorReq::setCrtc(const Crtc& crtc) {
+void ConnectorReq::setCrtc(const BDRM::Resources::Crtc& crtc) {
     SET("CRTC_ID", crtc.crtc_id)
     SET("link-status", DRM_MODE_LINK_STATUS_GOOD)
 }

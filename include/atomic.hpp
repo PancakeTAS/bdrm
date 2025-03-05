@@ -16,8 +16,6 @@ namespace BDRM { class Bdrm; }
 
 namespace BDRM::Atomic {
 
-    using namespace BDRM::Resources;
-
     /// Atomic request instance
     class AtomicRequest {
 
@@ -31,12 +29,12 @@ namespace BDRM::Atomic {
             std::vector<PlaneReq> planes;
 
             AtomicRequest(int fd); //!< create an empty request
-            AtomicRequest(const int fd, const Res& resources); //!< create a request zeroing all resources
+            AtomicRequest(const int fd, const BDRM::Resources::Res& resources); //!< create a request zeroing all resources
 
         public:
-            ConnectorReq& addConnector(const Connector& connector); //!< add a resource
-            CrtcReq& addCrtc(const Crtc& crtc);
-            PlaneReq& addPlane(const Plane& plane);
+            ConnectorReq& addConnector(const BDRM::Resources::Connector& connector); //!< add a resource
+            CrtcReq& addCrtc(const BDRM::Resources::Crtc& crtc);
+            PlaneReq& addPlane(const BDRM::Resources::Plane& plane);
 
             ~AtomicRequest();
 

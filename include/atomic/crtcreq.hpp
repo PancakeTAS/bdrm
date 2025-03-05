@@ -10,8 +10,6 @@
 
 namespace BDRM::Atomic {
 
-    using namespace BDRM::Resources;
-
     /// CRTC request properties
     class CrtcReq {
 
@@ -27,12 +25,12 @@ namespace BDRM::Atomic {
             void setDegammaLut(const std::vector<drm_color_lut>& lut);
 
         private:
-            const Crtc& crtc;
+            const BDRM::Resources::Crtc& crtc;
             const int fd;
             drmModeAtomicReq* req;
             std::vector<uint32_t> blobs; //!< list of blobs to free
 
-            CrtcReq(const Crtc& crtc, const int fd, drmModeAtomicReq* req) : crtc(crtc), fd(fd), req(req) {}
+            CrtcReq(const BDRM::Resources::Crtc& crtc, const int fd, drmModeAtomicReq* req) : crtc(crtc), fd(fd), req(req) {}
             void zeroedRequest(); //!< set all properties to zero
 
     };
