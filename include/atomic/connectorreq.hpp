@@ -18,7 +18,8 @@ namespace BDRM::Atomic {
         friend class AtomicRequest;
 
         public:
-            void setCrtc(const BDRM::Resources::Crtc& crtc); //!< set the CRTC and reset link status
+            /// Set the CRTC of the connector and reset the link status
+            void setCrtc(const BDRM::Resources::Crtc& crtc);
 
         private:
             const BDRM::Resources::Connector& connector;

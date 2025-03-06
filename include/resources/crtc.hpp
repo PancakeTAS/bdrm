@@ -16,7 +16,6 @@ namespace BDRM::Atomic {
 
 namespace BDRM::Resources {
 
-    /// Nonvolatile drm ctrc instance
     class Crtc {
 
         friend class Res;
@@ -25,9 +24,13 @@ namespace BDRM::Resources {
         friend class BDRM::Atomic::PlaneReq;
 
         public:
-            std::optional<size_t> gamma_lut_size; //!< amount of rows in the gamma lut
+            /// Size of the gamma look-up table
+            std::optional<size_t> gamma_lut_size;
+            /// Size of the degamma look-up table
             std::optional<size_t> degamma_lut_size;
-            bool ctm; //!< color transformation matrix
+            /// Whether a color transformation matrix is supported
+            bool ctm;
+            /// Whether the properties for explicit sync are present
             bool explicit_sync;
 
         private:

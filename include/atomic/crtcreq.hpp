@@ -16,12 +16,17 @@ namespace BDRM::Atomic {
         friend class AtomicRequest;
 
         public:
-            // methods for configurting the crtc
+            /// Enable or disable the CRTC
             void setActive(bool active);
+            /// Set the video mode of the CRTC
             void setMode(const drmModeModeInfo* mode);
-            void setVrr(bool vrr); //!< hint the driver to enable variable refresh rate, does not guarantee it
+            /// Hint to enable or disable VRR, may fail if not supported (as you cannot rely on vrr_capable)
+            void setVrr(bool vrr);
+            /// Set the gamma LUT of the CRTC, ensure this property is supported
             void setGammaLut(const std::vector<drm_color_lut>& lut);
+            /// Set the gamma LUT of the CRTC, ensure this property is supported
             void setCTM(const struct drm_color_ctm* ctm);
+            /// Set the gamma LUT of the CRTC, ensure this property is supported
             void setDegammaLut(const std::vector<drm_color_lut>& lut);
 
         private:

@@ -21,24 +21,25 @@ namespace BDRM::Resources {
         OVERLAY = 0,
         PRIMARY = 1,
         CURSOR = 2
-    }; //!< type of plane
+    }; //!< Type of plane
 
     struct PlaneFormat {
         union {
-            uint32_t format; //!< check drm_fourcc.h for formats
+            uint32_t format; //!< Check drm_fourcc.h for formats
             char fourcc[4];
         };
         std::vector<uint64_t> modifiers;
-    }; //!< plane format with all supported modifiers
+    }; //!< Plane format and modifiers
 
-    /// Nonvolatile drm plane instance
     class Plane {
 
         friend class Res;
         friend class BDRM::Atomic::PlaneReq;
 
         public:
+            /// Type of plane
             PlaneType type = PRIMARY;
+            /// List of formats supported by the plane. May be empty!
             std::vector<PlaneFormat> supported_formats;
 
         private:

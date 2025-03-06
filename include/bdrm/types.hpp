@@ -7,6 +7,7 @@
 namespace BDRM {
 
     // convenience types
+
     template <typename T>
     using Ref = std::reference_wrapper<T>;
 

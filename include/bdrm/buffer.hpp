@@ -12,20 +12,26 @@ namespace BDRM::Atomic { class PlaneReq; }
 
 namespace BDRM {
 
-    /// Nonvolatile gbm buffer instance
     class Buffer {
 
         friend class Bdrm;
         friend class BDRM::Atomic::PlaneReq;
 
         public:
+            /// Width and height in pixels
             uint32_t width, height;
+            /// Fourcc buffer format
             uint32_t format;
+            /// Bits per pixel, not bits per actual pixel data
             uint32_t bpp;
+            /// Optional modifier
             std::optional<uint64_t> modifier;
 
+            /// Buffer handles
             uint32_t handle[4] = { 0 };
+            /// Buffer pitches
             uint32_t stride[4] = { 0 };
+            /// Buffer offsets
             uint32_t offset[4] = { 0 };
 
             ~Buffer();

@@ -32,8 +32,19 @@ namespace BDRM::Atomic {
             AtomicRequest(const int fd, const BDRM::Resources::Res& resources); //!< create a request zeroing all resources
 
         public:
-            ConnectorReq& addConnector(const BDRM::Resources::Connector& connector); //!< add a resource
+
+            /*
+             * An atomic request is a collection of resources that are to be modified atomically.
+             * The following functions are used to add resources to the request.
+             */
+
+            /// Add a connector to the request
+            ConnectorReq& addConnector(const BDRM::Resources::Connector& connector);
+
+            /// Add a CRTC to the request
             CrtcReq& addCrtc(const BDRM::Resources::Crtc& crtc);
+
+            /// Add a plane to the request
             PlaneReq& addPlane(const BDRM::Resources::Plane& plane);
 
             ~AtomicRequest();

@@ -17,12 +17,17 @@ namespace BDRM::Atomic {
         friend class AtomicRequest;
 
         public:
-            // methods for configuring the plane
+            // TODO: unsetting should be possible, or at least filling up with zeros
+
+            /// Attach a framebuffer to the plane
             void setFb(const Buffer& fb, uint32_t x, uint32_t y, uint32_t w, uint32_t h);
+            /// Attach a framebuffer to the plane, with the same size as the framebuffer
             void setFb(const Buffer& fb) {
                 this->setFb(fb, 0, 0, fb.width, fb.height);
             }
+            /// Attach a CRTC to the plane
             void setCrtc(const BDRM::Resources::Crtc& crtc, uint32_t x, uint32_t y, uint32_t w, uint32_t h);
+            /// Attach a CRTC to the plane, with the same size as the CRTC
             void setCrtc(const BDRM::Resources::Crtc& crtc, const drmModeModeInfo* mode) {
                 this->setCrtc(crtc, 0, 0, mode->hdisplay, mode->vdisplay);
             }
